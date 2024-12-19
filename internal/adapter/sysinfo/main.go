@@ -1,22 +1,23 @@
-package main
+package sysinfo
 
 import (
 	"bytes"
 	"io"
 	"os"
+	"ssm/internal/domain/meminfo"
 	"strconv"
 	"strings"
 )
 
-const MEMINFO_PATH = "/proc/meminfo"
+type MemInfoService struct{}
 
-type MemInfo struct {
-	MemTotal     int `json:"mem_total"`
-	MemFree      int `json:"mem_free"`
-	MemAvailable int `json:"mem_available"`
+func NewMemInfoService() *MemInfoService {
+	return &MemInfoService{}
 }
 
-func GetMemInfo() (*MemInfo, error) {
+const MEMINFO_PATH = "/proc/meminfo"
+
+func (mis *MemInfoService) GetMemService() (*meminfo.MemInfo, error) {
 	file, err := os.Open(MEMINFO_PATH)
 	if err != nil {
 		return nil, err
@@ -27,7 +28,7 @@ func GetMemInfo() (*MemInfo, error) {
 		return nil, err
 	}
 
-	memInfo := &MemInfo{}
+	memInfo := &meminfo.MemInfo{}
 	for _, lineByte := range bytes.Split(data, []byte{10}) {
 		if len(lineByte) == 0 {
 			continue
