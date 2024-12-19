@@ -1,6 +1,7 @@
 package http
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -28,6 +29,8 @@ func NewServer(memInfoHandler *MemInfoHandler, assets string, port string) *Serv
 }
 
 func (s *Server) Serve() error {
+	log.Println("Staring server at", "http://localhost:"+s.port)
+
 	if err := http.ListenAndServe(":"+s.port, s.router); err != nil {
 		return err
 	}
