@@ -1,5 +1,7 @@
 package cpuinfo
 
+import "time"
+
 type CPUInfo struct {
 	Id        string `json:"id"`
 	User      int    `json:"user"`
@@ -16,4 +18,13 @@ type CPUInfo struct {
 
 type CPUInfoRepo interface {
 	GetCPUInfo() ([]CPUInfo, error)
+}
+
+type CPULoad struct {
+	Id   string  `json:"id"`
+	Load float32 `json:"load"`
+}
+
+type CPUInfoService interface {
+	StreamCPULoad(ch chan []CPULoad, period time.Duration)
 }

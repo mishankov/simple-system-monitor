@@ -17,7 +17,7 @@ func NewCPUInfoRepo() *CPUInfoRepo {
 
 const CPUINFO_PATH = "/proc/stat"
 
-func (cis *CPUInfoRepo) GetCPUInfo() ([]cpuinfo.CPUInfo, error) {
+func (cir *CPUInfoRepo) GetCPUInfo() ([]cpuinfo.CPUInfo, error) {
 	file, err := os.Open(CPUINFO_PATH)
 	if err != nil {
 		return nil, err
