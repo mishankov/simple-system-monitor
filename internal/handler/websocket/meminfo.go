@@ -17,6 +17,8 @@ func NewMemInfoHandler(svc meminfo.MemInfoService) *MemInfoHandler {
 }
 
 func (mif *MemInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
+	log.Println("Getting mem info")
+
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
 		log.Println("Error upgrading to ws:", err)

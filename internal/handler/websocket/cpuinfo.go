@@ -22,6 +22,8 @@ type cpuInfoResp struct {
 }
 
 func (cih *CPUInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
+	log.Println("Getting CPU info")
+
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
 		log.Println("Error upgrading to ws:", err)
