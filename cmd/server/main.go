@@ -4,10 +4,12 @@ import (
 	"log"
 	"ssm/internal/adapter/sysinfo"
 	"ssm/internal/handler/websocket"
+	"ssm/internal/service"
 )
 
 func main() {
-	memInfoService := sysinfo.NewMemInfoRepo()
+	memInfoRepo := sysinfo.NewMemInfoRepo()
+	memInfoService := service.NewMemInfoService(memInfoRepo)
 	memInfoHandler := websocket.NewMemInfoHandler(memInfoService)
 
 	cpuInfoService := sysinfo.NewCPUInfoRepo()

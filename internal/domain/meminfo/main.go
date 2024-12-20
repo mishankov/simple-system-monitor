@@ -1,5 +1,7 @@
 package meminfo
 
+import "time"
+
 type MemInfo struct {
 	MemTotal     int `json:"mem_total"`
 	MemFree      int `json:"mem_free"`
@@ -8,4 +10,8 @@ type MemInfo struct {
 
 type MemInfoRepo interface {
 	GetMemInfo() (*MemInfo, error)
+}
+
+type MemInfoService interface {
+	StreamMemInfo(ch chan *MemInfo, period time.Duration)
 }

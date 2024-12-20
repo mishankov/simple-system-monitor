@@ -17,7 +17,7 @@ func NewMemInfoRepo() *MemInfoRepo {
 
 const MEMINFO_PATH = "/proc/meminfo"
 
-func (mis *MemInfoRepo) GetMemInfo() (*meminfo.MemInfo, error) {
+func (mir *MemInfoRepo) GetMemInfo() (*meminfo.MemInfo, error) {
 	file, err := os.Open(MEMINFO_PATH)
 	if err != nil {
 		return nil, err

@@ -9,10 +9,10 @@ import (
 )
 
 type MemInfoHandler struct {
-	svc meminfo.MemInfoRepo
+	svc meminfo.MemInfoService
 }
 
-func NewMemInfoHandler(svc meminfo.MemInfoRepo) *MemInfoHandler {
+func NewMemInfoHandler(svc meminfo.MemInfoService) *MemInfoHandler {
 	return &MemInfoHandler{svc: svc}
 }
 
@@ -25,19 +25,11 @@ func (mif *MemInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	mich := make(chan []byte)
-	go func() {
-		for {
-			memInfo, _ := mif.svc.GetMemInfo()
-			memInfoJson, _ := json.Marshal(memInfo)
+	ch := make(chan *meminfo.MemInfo)
+	go mif.svc.StreamMemInfo(ch, 2*time.Second)
 
-			mich <- memInfoJson
-
-			time.Sleep(2 * time.Second)
-		}
-	}()
-
-	for mi := range mich {
-		conn.WriteMessage(1, mi)
+	for mi := range ch {
+		miBytes, _ := json.Marshal(mi)
+		conn.WriteMessage(1, miBytes)
 	}
 }
