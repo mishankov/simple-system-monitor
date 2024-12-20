@@ -19,10 +19,11 @@ type Server struct {
 	port   string
 }
 
-func NewServer(memInfoHandler *MemInfoHandler, assets string, port string) *Server {
+func NewServer(memInfoHandler *MemInfoHandler, cpuInfoHandler *CPUInfoHandler, assets string, port string) *Server {
 	r := chi.NewRouter()
 
 	r.Get("/meminfo", memInfoHandler.GetJsonWS)
+	r.Get("/cpuinfo", cpuInfoHandler.GetJsonWS)
 	r.Handle("/*", http.FileServer(http.Dir(assets)))
 
 	return &Server{router: r, port: port}
