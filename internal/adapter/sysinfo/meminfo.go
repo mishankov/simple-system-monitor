@@ -9,15 +9,15 @@ import (
 	"strings"
 )
 
-type MemInfoService struct{}
+type MemInfoRepo struct{}
 
-func NewMemInfoService() *MemInfoService {
-	return &MemInfoService{}
+func NewMemInfoRepo() *MemInfoRepo {
+	return &MemInfoRepo{}
 }
 
 const MEMINFO_PATH = "/proc/meminfo"
 
-func (mis *MemInfoService) GetMemInfo() (*meminfo.MemInfo, error) {
+func (mis *MemInfoRepo) GetMemInfo() (*meminfo.MemInfo, error) {
 	file, err := os.Open(MEMINFO_PATH)
 	if err != nil {
 		return nil, err

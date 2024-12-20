@@ -14,6 +14,6 @@ type CPUInfo struct {
 	GuestNice int    `json:"guest_nice"`
 }
 
-type CPUInfoService interface {
+type CPUInfoRepo interface {
 	GetCPUInfo() ([]CPUInfo, error)
 }

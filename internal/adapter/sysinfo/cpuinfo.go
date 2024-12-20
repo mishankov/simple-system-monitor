@@ -9,15 +9,15 @@ import (
 	"strings"
 )
 
-type CPUInfoService struct{}
+type CPUInfoRepo struct{}
 
-func NewCPUInfoService() *CPUInfoService {
-	return &CPUInfoService{}
+func NewCPUInfoRepo() *CPUInfoRepo {
+	return &CPUInfoRepo{}
 }
 
 const CPUINFO_PATH = "/proc/stat"
 
-func (cis *CPUInfoService) GetCPUInfo() ([]cpuinfo.CPUInfo, error) {
+func (cis *CPUInfoRepo) GetCPUInfo() ([]cpuinfo.CPUInfo, error) {
 	file, err := os.Open(CPUINFO_PATH)
 	if err != nil {
 		return nil, err

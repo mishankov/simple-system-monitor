@@ -7,10 +7,10 @@ import (
 )
 
 func main() {
-	memInfoService := sysinfo.NewMemInfoService()
+	memInfoService := sysinfo.NewMemInfoRepo()
 	memInfoHandler := websocket.NewMemInfoHandler(memInfoService)
 
-	cpuInfoService := sysinfo.NewCPUInfoService()
+	cpuInfoService := sysinfo.NewCPUInfoRepo()
 	cpuInfoHandler := websocket.NewCPUInfoHandler(cpuInfoService)
 
 	server := websocket.NewServer(memInfoHandler, cpuInfoHandler, "webapp/build", "4442")

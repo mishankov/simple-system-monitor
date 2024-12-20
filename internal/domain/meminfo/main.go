@@ -6,6 +6,6 @@ type MemInfo struct {
 	MemAvailable int `json:"mem_available"`
 }
 
-type MemInfoService interface {
+type MemInfoRepo interface {
 	GetMemInfo() (*MemInfo, error)
 }

@@ -9,10 +9,10 @@ import (
 )
 
 type MemInfoHandler struct {
-	svc meminfo.MemInfoService
+	svc meminfo.MemInfoRepo
 }
 
-func NewMemInfoHandler(svc meminfo.MemInfoService) *MemInfoHandler {
+func NewMemInfoHandler(svc meminfo.MemInfoRepo) *MemInfoHandler {
 	return &MemInfoHandler{svc: svc}
 }
 
