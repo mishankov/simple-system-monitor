@@ -1,5 +1,5 @@
 <script>
-  export let percent = 0
+  let { percent } = $props()
 </script>
 
 <div class="outer">
@@ -16,7 +16,7 @@
 
   .inner {
     height: 100%;
-    background-color: green;
+    background-color: seagreen;
     transition: width 0.5s;
   }
 </style>

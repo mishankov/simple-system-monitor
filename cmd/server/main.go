@@ -13,7 +13,7 @@ func main() {
 	cpuInfoService := sysinfo.NewCPUInfoService()
 	cpuInfoHandler := websocket.NewCPUInfoHandler(cpuInfoService)
 
-	server := websocket.NewServer(memInfoHandler, cpuInfoHandler, "public", "4442")
+	server := websocket.NewServer(memInfoHandler, cpuInfoHandler, "webapp/build", "4442")
 
 	if err := server.Serve(); err != nil {
 		log.Println("Error starting server:", err)
