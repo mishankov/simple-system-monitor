@@ -17,7 +17,7 @@ func NewMemInfoService() *MemInfoService {
 
 const MEMINFO_PATH = "/proc/meminfo"
 
-func (mis *MemInfoService) GetMemService() (*meminfo.MemInfo, error) {
+func (mis *MemInfoService) GetMemInfo() (*meminfo.MemInfo, error) {
 	file, err := os.Open(MEMINFO_PATH)
 	if err != nil {
 		return nil, err

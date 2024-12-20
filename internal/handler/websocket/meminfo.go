@@ -26,7 +26,7 @@ func (mif *MemInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
 	mich := make(chan []byte)
 	go func() {
 		for {
-			memInfo, _ := mif.svc.GetMemService()
+			memInfo, _ := mif.svc.GetMemInfo()
 			memInfoJson, _ := json.Marshal(memInfo)
 
 			mich <- memInfoJson

@@ -7,5 +7,5 @@ type MemInfo struct {
 }
 
 type MemInfoService interface {
-	GetMemService() (*MemInfo, error)
+	GetMemInfo() (*MemInfo, error)
 }
