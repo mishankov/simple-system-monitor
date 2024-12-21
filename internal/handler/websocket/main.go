@@ -1,6 +1,8 @@
 package websocket
 
 import (
+	"embed"
+	"io/fs"
 	"log"
 	"net/http"
 
@@ -19,12 +21,37 @@ type Server struct {
 	port   string
 }
 
-func NewServer(memInfoHandler *MemInfoHandler, cpuInfoHandler *CPUInfoHandler, assets string, port string) *Server {
+func StaticHandler(assets embed.FS) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		var filePath string
+		if req.URL.Path == "/" {
+			filePath = "build/index.html"
+		} else {
+			filePath = "build" + req.URL.Path
+		}
+
+		data, err := assets.ReadFile(filePath)
+		if err != nil {
+			log.Println(filePath)
+			http.Error(w, err.Error(), http.StatusNotFound)
+		}
+
+		w.Write(data)
+	}
+}
+
+func NewServer(memInfoHandler *MemInfoHandler, cpuInfoHandler *CPUInfoHandler, assets embed.FS, port string) *Server {
 	r := chi.NewRouter()
 
 	r.Get("/meminfo", memInfoHandler.GetJsonWS)
 	r.Get("/cpuinfo", cpuInfoHandler.GetJsonWS)
-	r.Handle("/*", http.FileServer(http.Dir(assets)))
+
+	serverRoot, err := fs.Sub(assets, "build")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	r.Handle("/*", http.FileServer(http.FS(serverRoot)))
 
 	return &Server{router: r, port: port}
 }
