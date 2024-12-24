@@ -6,14 +6,15 @@ import (
 )
 
 type CPUInfoService struct {
-	repo cpuinfo.CPUInfoRepo
+	repo   cpuinfo.CPUInfoRepo
+	period int
 }
 
-func NewCPUInfoService(repo cpuinfo.CPUInfoRepo) *CPUInfoService {
-	return &CPUInfoService{repo: repo}
+func NewCPUInfoService(repo cpuinfo.CPUInfoRepo, period int) *CPUInfoService {
+	return &CPUInfoService{repo: repo, period: period}
 }
 
-func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad, period time.Duration) {
+func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad) {
 	initial := []cpuinfo.CPULoad{}
 	prevData, _ := cis.repo.GetCPUInfo()
 	for _, cpuInfo := range prevData {
@@ -21,7 +22,7 @@ func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad, period time.
 	}
 	ch <- initial
 
-	time.Sleep(period)
+	time.Sleep(time.Duration(cis.period) * time.Second)
 	for {
 		cpuInfos, _ := cis.repo.GetCPUInfo()
 
@@ -46,6 +47,6 @@ func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad, period time.
 		ch <- loads
 
 		prevData = cpuInfos
-		time.Sleep(period)
+		time.Sleep(time.Duration(cis.period) * time.Second)
 	}
 }

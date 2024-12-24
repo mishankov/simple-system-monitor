@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"ssm/internal/domain/cpuinfo"
-	"time"
 )
 
 type CPUInfoHandler struct {
@@ -26,7 +25,7 @@ func (cih *CPUInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
 	}
 
 	ch := make(chan []cpuinfo.CPULoad)
-	go cih.svc.StreamCPULoad(ch, 2*time.Second)
+	go cih.svc.StreamCPULoad(ch)
 
 	for ci := range ch {
 		ciBytes, _ := json.Marshal(ci)

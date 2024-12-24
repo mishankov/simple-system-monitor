@@ -1,7 +1,5 @@
 package cpuinfo
 
-import "time"
-
 type CPUInfo struct {
 	Id        string `json:"id"`
 	User      int    `json:"user"`
@@ -26,5 +24,5 @@ type CPULoad struct {
 }
 
 type CPUInfoService interface {
-	StreamCPULoad(ch chan []CPULoad, period time.Duration)
+	StreamCPULoad(ch chan []CPULoad)
 }

@@ -9,16 +9,16 @@ import (
 	"strings"
 )
 
-type CPUInfoRepo struct{}
-
-func NewCPUInfoRepo() *CPUInfoRepo {
-	return &CPUInfoRepo{}
+type CPUInfoRepo struct {
+	path string
 }
 
-const CPUINFO_PATH = "/proc/stat"
+func NewCPUInfoRepo(path string) *CPUInfoRepo {
+	return &CPUInfoRepo{path}
+}
 
 func (cir *CPUInfoRepo) GetCPUInfo() ([]cpuinfo.CPUInfo, error) {
-	file, err := os.Open(CPUINFO_PATH)
+	file, err := os.Open(cir.path)
 	if err != nil {
 		return nil, err
 	}

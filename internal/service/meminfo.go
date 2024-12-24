@@ -6,18 +6,19 @@ import (
 )
 
 type MemInfoService struct {
-	repo meminfo.MemInfoRepo
+	repo   meminfo.MemInfoRepo
+	period int
 }
 
-func NewMemInfoService(repo meminfo.MemInfoRepo) *MemInfoService {
-	return &MemInfoService{repo: repo}
+func NewMemInfoService(repo meminfo.MemInfoRepo, period int) *MemInfoService {
+	return &MemInfoService{repo: repo, period: period}
 }
 
-func (mis *MemInfoService) StreamMemInfo(ch chan *meminfo.MemInfo, period time.Duration) {
+func (mis *MemInfoService) StreamMemInfo(ch chan *meminfo.MemInfo) {
 	for {
 		memInfo, _ := mis.repo.GetMemInfo()
 		ch <- memInfo
 
-		time.Sleep(period)
+		time.Sleep(time.Duration(mis.period) * time.Second)
 	}
 }

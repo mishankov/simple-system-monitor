@@ -9,16 +9,16 @@ import (
 	"strings"
 )
 
-type MemInfoRepo struct{}
-
-func NewMemInfoRepo() *MemInfoRepo {
-	return &MemInfoRepo{}
+type MemInfoRepo struct {
+	path string
 }
 
-const MEMINFO_PATH = "/proc/meminfo"
+func NewMemInfoRepo(path string) *MemInfoRepo {
+	return &MemInfoRepo{path}
+}
 
 func (mir *MemInfoRepo) GetMemInfo() (*meminfo.MemInfo, error) {
-	file, err := os.Open(MEMINFO_PATH)
+	file, err := os.Open(mir.path)
 	if err != nil {
 		return nil, err
 	}

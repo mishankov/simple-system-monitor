@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"ssm/internal/domain/meminfo"
-	"time"
 )
 
 type MemInfoHandler struct {
@@ -26,7 +25,7 @@ func (mif *MemInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
 	}
 
 	ch := make(chan *meminfo.MemInfo)
-	go mif.svc.StreamMemInfo(ch, 2*time.Second)
+	go mif.svc.StreamMemInfo(ch)
 
 	for mi := range ch {
 		miBytes, _ := json.Marshal(mi)
