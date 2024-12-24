@@ -16,7 +16,7 @@ func NewCPUInfoHandler(svc cpuinfo.CPUInfoService) *CPUInfoHandler {
 }
 
 func (cih *CPUInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
-	log.Println("Getting CPU info")
+	log.Printf("%v requests CPU info", req.RemoteAddr)
 
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
