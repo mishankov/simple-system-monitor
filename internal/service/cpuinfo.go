@@ -14,7 +14,13 @@ func NewCPUInfoService(repo cpuinfo.CPUInfoRepo) *CPUInfoService {
 }
 
 func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad, period time.Duration) {
+	initial := []cpuinfo.CPULoad{}
 	prevData, _ := cis.repo.GetCPUInfo()
+	for _, cpuInfo := range prevData {
+		initial = append(initial, cpuinfo.CPULoad{Id: cpuInfo.Id, Load: 0})
+	}
+	ch <- initial
+
 	time.Sleep(period)
 	for {
 		cpuInfos, _ := cis.repo.GetCPUInfo()
