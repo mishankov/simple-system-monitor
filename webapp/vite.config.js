@@ -12,6 +12,10 @@ export default defineConfig({
 			'/cpuinfo': {
 				target: 'http://localhost:4442',
 				ws: true
+			},
+			'/uptime': {
+				target: 'http://localhost:4442',
+				ws: true
 			}
 		}
 	}

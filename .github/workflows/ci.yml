@@ -41,7 +41,7 @@ jobs:
       - name: Upload Linux executable
         uses: actions/upload-artifact@v4
         with:
-          name: simple-server-monitor-${{ github.ref_name }}
+          name: simple-server-monitor
           path: build
           retention-days: 5
 
