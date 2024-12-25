@@ -3,7 +3,7 @@
 </script>
 
 <div class="card">
-	<h1>{header}</h1>
+	<h3>{header}</h3>
 	<div class="content">
 		{@render content()}
 	</div>
@@ -18,9 +18,10 @@
 		padding: 10px;
 
 		border-radius: 10px;
+		border: 1px solid lightgray;
 		box-shadow:
-			0 4px 8px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			0 2px 4px 0 rgba(0, 0, 0, 0.2),
+			0 3px 6px 0 rgba(0, 0, 0, 0.19);
 	}
 
 	.content {
