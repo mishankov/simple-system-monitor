@@ -27,6 +27,7 @@ type MonitorConfig struct {
 type AppConfig struct {
 	Port          string
 	UpdatePeriod  int
+	Path          string
 	CPUInfoConfig MonitorConfig
 	MemInfoConfig MonitorConfig
 	UptimeConfig  MonitorConfig
@@ -38,6 +39,8 @@ func New() (*AppConfig, error) {
 		return nil, err
 	}
 
+	path := getEnvOrDefault("SSM_PATH", "/proc")
+
 	// CPU
 
 	updatePeriodCPU, err := strconv.Atoi(getEnvOrDefault("SSM_CPUINFO_PERIOD", strconv.Itoa(updatePeriod)))
@@ -46,7 +49,7 @@ func New() (*AppConfig, error) {
 	}
 
 	cpuInfoConfig := MonitorConfig{
-		Path:         getEnvOrDefault("SSM_CPUINFO_PATH", "/proc/stat"),
+		Path:         getEnvOrDefault("SSM_CPUINFO_PATH", path+"/stat"),
 		UpdatePeriod: updatePeriodCPU,
 	}
 
@@ -58,7 +61,7 @@ func New() (*AppConfig, error) {
 	}
 
 	memInfoConfig := MonitorConfig{
-		Path:         getEnvOrDefault("SSM_MEMINFO_PATH", "/proc/meminfo"),
+		Path:         getEnvOrDefault("SSM_MEMINFO_PATH", path+"/meminfo"),
 		UpdatePeriod: updatePeriodMem,
 	}
 
@@ -70,13 +73,14 @@ func New() (*AppConfig, error) {
 	}
 
 	uptimeConfig := MonitorConfig{
-		Path:         getEnvOrDefault("SSM_UPTIME_PATH", "/proc/uptime"),
+		Path:         getEnvOrDefault("SSM_UPTIME_PATH", path+"/uptime"),
 		UpdatePeriod: updatePeriodUptime,
 	}
 
 	return &AppConfig{
 		Port:          getEnvOrDefault("SSM_PORT", "4442"),
 		UpdatePeriod:  updatePeriod,
+		Path:          path,
 		CPUInfoConfig: cpuInfoConfig,
 		MemInfoConfig: memInfoConfig,
 		UptimeConfig:  uptimeConfig,
@@ -87,6 +91,7 @@ func (ac *AppConfig) String() string {
 	out := "SSM config:"
 	out += fmt.Sprintf("\nPort: %v", ac.Port)
 	out += fmt.Sprintf("\nGlobal update period: %v", ac.UpdatePeriod)
+	out += fmt.Sprintf("\nBase path: %v", ac.Path)
 	out += fmt.Sprintf("\nCPU info file path: %v", ac.CPUInfoConfig.Path)
 	out += fmt.Sprintf("\nCPU info update period: %v", ac.CPUInfoConfig.UpdatePeriod)
 	out += fmt.Sprintf("\nMem info file path: %v", ac.MemInfoConfig.Path)
