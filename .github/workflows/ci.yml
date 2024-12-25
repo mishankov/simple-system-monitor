@@ -14,24 +14,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-
-      - run: cd webapp
-      - run: npm install
-
-      - run: npm run check
-      - run: npm run lint
-
-      - run: npm run build
-
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -42,9 +24,13 @@ jobs:
         with:
           node-version: 20.x
 
-      - run: cd webapp
-      - run: npm install
-      - run: npm run build
+      - name: Check and build frontend
+        working-directory: ./webapp
+        run: |
+          npm install
+          npm run check
+          npm run lint
+          npm run build
 
       # Building server
       - uses: actions/setup-go@v5
