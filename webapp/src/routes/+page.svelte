@@ -19,7 +19,7 @@
 	let socketCpu;
 
 	onMount(() => {
-		socketMem = new WebSocket(`ws://10.0.0.157:4442/meminfo`);
+		socketMem = new WebSocket(`ws://${location.host}/meminfo`);
 
 		socketMem.addEventListener('message', function (event) {
 			if (event.data.length > 0) {
@@ -32,7 +32,7 @@
 			}
 		});
 
-		socketCpu = new WebSocket(`ws://10.0.0.157:4442/cpuinfo`);
+		socketCpu = new WebSocket(`ws://${location.host}/cpuinfo`);
 
 		socketCpu.addEventListener('message', function (event) {
 			if (event.data.length > 0) {
