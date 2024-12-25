@@ -6,13 +6,13 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/meminfo': {
-				target: "http://localhost:4442",
+				target: 'http://localhost:4442',
 				ws: true
 			},
 			'/cpuinfo': {
-				target: "http://localhost:4442",
+				target: 'http://localhost:4442',
 				ws: true
-			},
+			}
 		}
 	}
 });

@@ -59,6 +59,7 @@
 <div class="container">
 	<Card header="RAM" content={ram} />
 	<Card header="CPU" content={cpu} />
+	<Card header="Uptime" content={uptime} />
 
 	{#snippet ram()}
 		<LoadLine percent={memPercent * 100} />
@@ -85,6 +86,10 @@
 				{/if}
 			{/each}
 		</div>
+	{/snippet}
+
+	{#snippet uptime()}
+		<NumberFlow value={12231} format={{ style: 'unit', unit: 'day', unitDisplay: 'long' }} />
 	{/snippet}
 </div>
 
