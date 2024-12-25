@@ -1,17 +1,17 @@
 package cpuinfo
 
 type CPUInfo struct {
-	Id        string `json:"id"`
-	User      int    `json:"user"`
-	Nice      int    `json:"nice"`
-	System    int    `json:"system"`
-	Idle      int    `json:"idle"`
-	Iowait    int    `json:"iowait"`
-	Irq       int    `json:"irq"`
-	Softirq   int    `json:"softirq"`
-	Steal     int    `json:"steal"`
-	Guest     int    `json:"guest"`
-	GuestNice int    `json:"guest_nice"`
+	Id        string
+	User      int
+	Nice      int
+	System    int
+	Idle      int
+	Iowait    int
+	Irq       int
+	Softirq   int
+	Steal     int
+	Guest     int
+	GuestNice int
 }
 
 type CPUInfoRepo interface {
