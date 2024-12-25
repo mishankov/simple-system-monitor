@@ -58,7 +58,6 @@
 				uptimeData.minutes = ~~(uptimeSeconds / 60) % 60;
 				uptimeData.hours = ~~(uptimeSeconds / 60 / 60) % 24;
 				uptimeData.days = ~~(uptimeSeconds / 60 / 60 / 24);
-				console.log(uptimeData);
 			}
 		});
 	});
