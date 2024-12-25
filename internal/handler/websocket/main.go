@@ -21,11 +21,12 @@ type Server struct {
 	port   string
 }
 
-func NewServer(memInfoHandler *MemInfoHandler, cpuInfoHandler *CPUInfoHandler, assets embed.FS, port string) *Server {
+func NewServer(memInfoHandler *MemInfoHandler, cpuInfoHandler *CPUInfoHandler, uptimeHandler *UptimeHandler, assets embed.FS, port string) *Server {
 	r := chi.NewRouter()
 
 	r.Get("/meminfo", memInfoHandler.GetJsonWS)
 	r.Get("/cpuinfo", cpuInfoHandler.GetJsonWS)
+	r.Get("/uptime", uptimeHandler.GetJsonWS)
 
 	serverRoot, err := fs.Sub(assets, "build")
 	if err != nil {
