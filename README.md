@@ -43,5 +43,19 @@ unzip simple-server-monitor.zip
 ./simple-server-monitor
 ```
 
+## Configuration
 
+Configuration of `simple-system-monitor` is done with environment variables. Available env vars:
 
+- `SSM_PERIOD` - period for updating all monitoring in seconds. Default is `2`
+- `SSM_PATH` - path to take system information from. Default is `/proc`
+- `SSM_PORT` - port to run web server. Default is `4442`
+
+- `SSM_CPUINFO_PERIOD` - period for updating CPU monitoring in seconds. Default is `SSM_PERIOD` value
+- `SSM_CPUINFO_PATH` - path to take CPU information from. Default is `SSM_PATH` value + `/stat`
+
+- `SSM_MEMINFO_PERIOD` - period for updating RAM monitoring in seconds. Default is `SSM_PERIOD` value
+- `SSM_MEMINFO_PATH` - path to take RAM information from. Default is `SSM_PATH` value + `/meminfo`
+
+- `SSM_UPTIME_PERIOD` - period for updating uptime monitoring in seconds. Default is `SSM_PERIOD` value
+- `SSM_UPTIME_PATH` - path to take uptime information from. Default is `SSM_PATH` value + `/uptime`
