@@ -8,11 +8,11 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/mishankov/simple-system-monitor)
 ![GitHub package.json dev/peer/optional dependency version](https://img.shields.io/github/package-json/dependency-version/mishankov/simple-system-monitor/dev/svelte?filename=webapp%2Fpackage.json)
 
-
 ---
 
-See your server resourses on web UI
+See your server resourses on simple web UI
 
+![screenshor](images/screenshot.png)
 
 
 
