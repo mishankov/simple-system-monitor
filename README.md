@@ -14,5 +14,34 @@ See your server resourses on simple web UI
 
 ![screenshor](images/screenshot.png)
 
+## Setup
+
+### docker compose
+
+Simple docker compose service looks like this
+
+```yaml
+simple-system-monitor:
+  image: ghcr.io/mishankov/simple-system-monitor:latest
+  container_name: simple-system-monitor
+  ports:
+    - 4442:4442
+  environment:
+    - SSM_PATH="/hostfs/proc"
+  volumes:
+    - /:/hostfs:ro
+  restart: 'unless-stopped'
+```
+
+### Binary
+
+Download latest `simple-system-monitor` binary from [latest GitHub release](https://github.com/mishankov/simple-system-monitor/releases/latest), unzip it and run
+
+```shell
+wget http://github.com/mishankov/simple-system-monitor/releases/latest/download/simple-server-monitor.zip
+unzip simple-server-monitor.zip
+./simple-server-monitor
+```
+
 
 
