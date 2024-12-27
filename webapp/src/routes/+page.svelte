@@ -103,11 +103,11 @@
 {/snippet}
 
 {#snippet cpu()}
-	<div class="list">
+	<div class="cpu-list">
 		{#each cpus as cpu (cpu.id)}
 			{#if cpu.id != ''}
-				<div class="line">
-					<span>{cpu.id}</span>
+				<div class="cpu-line">
+					<span class="cpu-id">{cpu.id}</span>
 					<LoadLine percent={cpu.load * 100} />
 					<NumberFlow value={cpu.load} format={{ style: 'percent', maximumFractionDigits: 2 }} />
 				</div>
@@ -169,16 +169,25 @@
 		gap: 10px;
 	}
 
-	.list {
+	.cpu-list {
 		display: flex;
 		flex-direction: column;
 		gap: 5px;
 	}
 
-	.line {
-		display: flex;
+	.cpu-line {
+		/* display: flex;
 		flex-direction: row;
 		gap: 10px;
+		align-items: center; */
+
+		display: grid;
 		align-items: center;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 10px;
+	}
+
+	.cpu-id {
+		text-align: right;
 	}
 </style>

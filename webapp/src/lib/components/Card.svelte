@@ -3,7 +3,7 @@
 </script>
 
 <div class="card">
-	<h3>{header}</h3>
+	<h2>{header}</h2>
 	<div class="content">
 		{@render content()}
 	</div>
@@ -14,6 +14,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		gap: 5px;
 
 		padding: 10px;
 
