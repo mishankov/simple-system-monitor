@@ -16,9 +16,9 @@ See your server resourses on simple web UI
 
 ## Setup
 
-### docker compose
+### Docker Compose
 
-Simple docker compose service looks like this
+Simple Docker Compose service looks like this
 
 ```yaml
 simple-system-monitor:
