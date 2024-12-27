@@ -81,6 +81,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Simple system monitor</title>
+</svelte:head>
+
 <div class="container">
 	<div class="cards">
 		<Card header="RAM" content={ram} />
