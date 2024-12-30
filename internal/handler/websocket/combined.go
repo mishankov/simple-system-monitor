@@ -7,7 +7,6 @@ import (
 	"ssm/internal/domain/cpuinfo"
 	"ssm/internal/domain/meminfo"
 	"ssm/internal/domain/uptime"
-	"sync"
 )
 
 type CombinedHandler struct {
@@ -35,9 +34,8 @@ func (coh *CombinedHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) 
 	}
 	defer conn.Close()
 
-	var wg sync.WaitGroup
+	messagesCh := make(chan []byte)
 
-	wg.Add(1)
 	go func() {
 		ch := make(chan []cpuinfo.CPULoad)
 
@@ -45,46 +43,35 @@ func (coh *CombinedHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) 
 
 		for ci := range ch {
 			ciBytes, _ := json.Marshal(ci)
-			err := conn.WriteMessage(1, ciBytes)
-			if err != nil {
-				log.Printf("Error sending cpu info to %v: %v", req.RemoteAddr, err)
-				wg.Done()
-				break
-			}
+			messagesCh <- ciBytes
 		}
 	}()
 
-	wg.Add(1)
 	go func() {
 		ch := make(chan *meminfo.MemInfo)
 		go coh.memSvc.StreamMemInfo(ch)
 
 		for mi := range ch {
 			miBytes, _ := json.Marshal(mi)
-			err := conn.WriteMessage(1, miBytes)
-			if err != nil {
-				log.Printf("Error sending mem info to %v: %v", req.RemoteAddr, err)
-				wg.Done()
-				break
-			}
+			messagesCh <- miBytes
 		}
 	}()
 
-	wg.Add(1)
 	go func() {
 		ch := make(chan *uptime.Uptime)
 		go coh.uptimeSvc.StreamUptime(ch)
 
 		for u := range ch {
 			uBytes, _ := json.Marshal(u)
-			err := conn.WriteMessage(1, uBytes)
-			if err != nil {
-				log.Printf("Error sending mem info to %v: %v", req.RemoteAddr, err)
-				wg.Done()
-				break
-			}
+			messagesCh <- uBytes
 		}
 	}()
 
-	wg.Wait()
+	for m := range messagesCh {
+		err := conn.WriteMessage(1, m)
+		if err != nil {
+			log.Printf("Error sending data to %v: %v", req.RemoteAddr, err)
+			break
+		}
+	}
 }
