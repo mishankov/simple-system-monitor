@@ -31,9 +31,11 @@ func main() {
 
 	uptimeRepo := sysinfo.NewUptimeRepo(appConfig.UptimeConfig.Path)
 	uptimeService := service.NewUptimeService(uptimeRepo, appConfig.UptimeConfig.UpdatePeriod)
-	uptitimeHandler := websocket.NewUptimeHandler(uptimeService)
+	uptimeHandler := websocket.NewUptimeHandler(uptimeService)
 
-	server := websocket.NewServer(memInfoHandler, cpuInfoHandler, uptitimeHandler, assets, appConfig.Port)
+	combinedHandler := websocket.NewCombinedHandler(cpuInfoService, memInfoService, uptimeService)
+
+	server := websocket.NewServer(memInfoHandler, cpuInfoHandler, uptimeHandler, combinedHandler, assets, appConfig.Port)
 
 	if err := server.Serve(); err != nil {
 		log.Println("Error starting server:", err)
