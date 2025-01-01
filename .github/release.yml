@@ -8,6 +8,6 @@ changelog:
       labels:
         - dependencies
 
-    - title: other
+    - title: Other
       labels:
         - '*'
