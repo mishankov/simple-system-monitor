@@ -73,7 +73,7 @@ jobs:
     steps:
       - uses: fgrosse/go-coverage-report@v1.2.0 # Consider using a Git revision for maximum security
         with:
-          coverage-artifact-name: "go-code-coverage" # can be omitted if you used this default value
+          coverage-artifact-name: "go-code-coverage.zip" # can be omitted if you used this default value
           coverage-file-name: "coverage.out" # can be omitted if you used this default value
 
   docker:
