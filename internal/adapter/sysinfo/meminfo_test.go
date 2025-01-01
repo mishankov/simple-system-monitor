@@ -16,9 +16,7 @@ SomeOtherData:    101019 kB`)
 	repo := NewMemInfoRepo(testutils.NewFakeFileReader(input))
 
 	data, err := repo.GetMemInfo()
-	if err != nil {
-		t.Fatal("Error is not expected:", err)
-	}
+	testutils.AssertError(t, err)
 
 	t.Run("test mem free", func(t *testing.T) {
 		testutils.Assert(t, data.MemFree, 5207492)
