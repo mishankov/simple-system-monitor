@@ -25,14 +25,18 @@ softirq 36716593 241 3152731 81484 22133904 337881 0 66331 7962216 270 2981535`)
 		t.Fatal("Error is not expected")
 	}
 
-	if len(cpuInfos) != 2 {
-		t.Fatalf("Got %d CPUs want 2", len(cpuInfos))
-	}
-
-	for i, cpuInfo := range cpuInfos {
-		want := "cpu" + strconv.Itoa(i)
-		if cpuInfo.Id != want {
-			t.Fatalf("Got CPU id %v want %v", cpuInfo.Id, want)
+	t.Run("test CPUs count", func(t *testing.T) {
+		if len(cpuInfos) != 2 {
+			t.Fatalf("Got %d CPUs want 2", len(cpuInfos))
 		}
-	}
+	})
+
+	t.Run("test CPU ids", func(t *testing.T) {
+		for i, cpuInfo := range cpuInfos {
+			want := "cpu" + strconv.Itoa(i)
+			if cpuInfo.Id != want {
+				t.Fatalf("Got CPU id %v want %v", cpuInfo.Id, want)
+			}
+		}
+	})
 }
