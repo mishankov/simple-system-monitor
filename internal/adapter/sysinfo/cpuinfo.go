@@ -7,10 +7,6 @@ import (
 	"strings"
 )
 
-type DataReader interface {
-	ReadData() ([]byte, error)
-}
-
 type CPUInfoRepo struct {
 	dataReader DataReader
 }

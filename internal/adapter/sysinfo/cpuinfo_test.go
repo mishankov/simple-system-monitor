@@ -22,7 +22,7 @@ softirq 36716593 241 3152731 81484 22133904 337881 0 66331 7962216 270 2981535`)
 
 	cpuInfos, err := repo.GetCPUInfo()
 	if err != nil {
-		t.Fatal("Error is not expected")
+		t.Fatal("Error is not expected", err)
 	}
 
 	t.Run("test CPUs count", func(t *testing.T) {

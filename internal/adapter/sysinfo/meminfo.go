@@ -2,28 +2,21 @@ package sysinfo
 
 import (
 	"bytes"
-	"io"
-	"os"
 	"ssm/internal/domain/meminfo"
 	"strconv"
 	"strings"
 )
 
 type MemInfoRepo struct {
-	path string
+	dataReader DataReader
 }
 
-func NewMemInfoRepo(path string) *MemInfoRepo {
-	return &MemInfoRepo{path}
+func NewMemInfoRepo(dataReader DataReader) *MemInfoRepo {
+	return &MemInfoRepo{dataReader: dataReader}
 }
 
 func (mir *MemInfoRepo) GetMemInfo() (*meminfo.MemInfo, error) {
-	file, err := os.Open(mir.path)
-	if err != nil {
-		return nil, err
-	}
-
-	data, err := io.ReadAll(file)
+	data, err := mir.dataReader.ReadData()
 	if err != nil {
 		return nil, err
 	}

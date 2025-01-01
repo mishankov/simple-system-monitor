@@ -1,13 +1,10 @@
 package testutils
 
-type FakeFileReader struct {
-	data []byte
-}
+import "testing"
 
-func NewFakeFileReader(data []byte) *FakeFileReader {
-	return &FakeFileReader{data: data}
-}
-
-func (ffr *FakeFileReader) ReadData() ([]byte, error) {
-	return ffr.data, nil
+func Assert(t *testing.T, got, want interface{}) {
+	t.Helper()
+	if got != want {
+		t.Fatalf("Got %v want %v", got, want)
+	}
 }

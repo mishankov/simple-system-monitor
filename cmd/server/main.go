@@ -22,7 +22,8 @@ func main() {
 
 	log.Println(appConfig)
 
-	memInfoRepo := sysinfo.NewMemInfoRepo(appConfig.MemInfoConfig.Path)
+	memInfoFileReader := fsutils.NewFileReader(appConfig.MemInfoConfig.Path)
+	memInfoRepo := sysinfo.NewMemInfoRepo(memInfoFileReader)
 	memInfoService := service.NewMemInfoService(memInfoRepo, appConfig.MemInfoConfig.UpdatePeriod)
 	memInfoHandler := websocket.NewMemInfoHandler(memInfoService)
 
