@@ -2,28 +2,25 @@ package sysinfo
 
 import (
 	"bytes"
-	"io"
-	"os"
 	"ssm/internal/domain/cpuinfo"
 	"strconv"
 	"strings"
 )
 
-type CPUInfoRepo struct {
-	path string
+type DataReader interface {
+	ReadData() ([]byte, error)
 }
 
-func NewCPUInfoRepo(path string) *CPUInfoRepo {
-	return &CPUInfoRepo{path}
+type CPUInfoRepo struct {
+	dataReader DataReader
+}
+
+func NewCPUInfoRepo(dataReader DataReader) *CPUInfoRepo {
+	return &CPUInfoRepo{dataReader: dataReader}
 }
 
 func (cir *CPUInfoRepo) GetCPUInfo() ([]cpuinfo.CPUInfo, error) {
-	file, err := os.Open(cir.path)
-	if err != nil {
-		return nil, err
-	}
-
-	data, err := io.ReadAll(file)
+	data, err := cir.dataReader.ReadData()
 	if err != nil {
 		return nil, err
 	}

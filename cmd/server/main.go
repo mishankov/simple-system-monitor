@@ -5,6 +5,7 @@ import (
 	"log"
 	"ssm/internal/adapter/config"
 	"ssm/internal/adapter/sysinfo"
+	"ssm/internal/fsutils"
 	"ssm/internal/handler/websocket"
 	"ssm/internal/service"
 )
@@ -25,7 +26,8 @@ func main() {
 	memInfoService := service.NewMemInfoService(memInfoRepo, appConfig.MemInfoConfig.UpdatePeriod)
 	memInfoHandler := websocket.NewMemInfoHandler(memInfoService)
 
-	cpuInfoRepo := sysinfo.NewCPUInfoRepo(appConfig.CPUInfoConfig.Path)
+	cpuInfoFileReader := fsutils.NewFileReader(appConfig.CPUInfoConfig.Path)
+	cpuInfoRepo := sysinfo.NewCPUInfoRepo(cpuInfoFileReader)
 	cpuInfoService := service.NewCPUInfoService(cpuInfoRepo, appConfig.CPUInfoConfig.UpdatePeriod)
 	cpuInfoHandler := websocket.NewCPUInfoHandler(cpuInfoService)
 
