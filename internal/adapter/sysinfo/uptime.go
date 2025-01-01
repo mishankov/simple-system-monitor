@@ -1,28 +1,21 @@
 package sysinfo
 
 import (
-	"io"
-	"os"
 	"ssm/internal/domain/uptime"
 	"strconv"
 	"strings"
 )
 
 type UptimeRepo struct {
-	path string
+	dataReader DataReader
 }
 
-func NewUptimeRepo(path string) *UptimeRepo {
-	return &UptimeRepo{path}
+func NewUptimeRepo(dataReader DataReader) *UptimeRepo {
+	return &UptimeRepo{dataReader: dataReader}
 }
 
 func (ur *UptimeRepo) GetUptime() (*uptime.Uptime, error) {
-	file, err := os.Open(ur.path)
-	if err != nil {
-		return nil, err
-	}
-
-	data, err := io.ReadAll(file)
+	data, err := ur.dataReader.ReadData()
 	if err != nil {
 		return nil, err
 	}

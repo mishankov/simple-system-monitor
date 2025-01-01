@@ -32,7 +32,8 @@ func main() {
 	cpuInfoService := service.NewCPUInfoService(cpuInfoRepo, appConfig.CPUInfoConfig.UpdatePeriod)
 	cpuInfoHandler := websocket.NewCPUInfoHandler(cpuInfoService)
 
-	uptimeRepo := sysinfo.NewUptimeRepo(appConfig.UptimeConfig.Path)
+	uptimeFileReader := fsutils.NewFileReader(appConfig.UptimeConfig.Path)
+	uptimeRepo := sysinfo.NewUptimeRepo(uptimeFileReader)
 	uptimeService := service.NewUptimeService(uptimeRepo, appConfig.UptimeConfig.UpdatePeriod)
 	uptimeHandler := websocket.NewUptimeHandler(uptimeService)
 
