@@ -39,7 +39,18 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: 1.23
-      - run: go build -o ./build/simple-server-monitor ./cmd/server
+
+      - name: "Test backend"
+        run: go test ./... -v -bench . -coverprofile coverage.out
+
+      - name: "Upload coverage report"
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-code-coverage
+          path: coverage.out
+
+      - name: "Build backend"  
+        run: go build -o ./build/simple-server-monitor ./cmd/server
 
       - name: Upload Linux executable
         uses: actions/upload-artifact@v4
