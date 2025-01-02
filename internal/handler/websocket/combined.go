@@ -28,7 +28,7 @@ func (coh *CombinedHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) 
 
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
-		logger.Error("Error upgrading to ws:", err.Error())
+		logger.Error("Error upgrading to ws:", err)
 		return
 	}
 	defer conn.Close()
