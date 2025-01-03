@@ -8,7 +8,10 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/websocket"
+	"github.com/mishankov/logman"
 )
+
+var logger = logman.NewDefaultLogger()
 
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
@@ -40,7 +43,7 @@ func NewServer(memInfoHandler *MemInfoHandler, cpuInfoHandler *CPUInfoHandler, u
 }
 
 func (s *Server) Serve() error {
-	log.Println("Staring server at", "http://localhost:"+s.port)
+	logger.Info("Staring server at", "http://localhost:"+s.port)
 
 	if err := http.ListenAndServe(":"+s.port, s.router); err != nil {
 		return err
