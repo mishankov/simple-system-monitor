@@ -2,5 +2,5 @@ github.com/go-chi/chi/v5 v5.2.0 h1:Aj1EtB0qR2Rdo2dG4O94RIU35w2lvQSj6BRA4+qwFL0=
 github.com/go-chi/chi/v5 v5.2.0/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
 github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
-github.com/mishankov/logman v0.1.0-alpha.2.0.20250102220228-981c015066a9 h1:xFE0ZA+0kG1ByZlMEkMWPcy2Makp+xu+DPVTi3Ns65U=
-github.com/mishankov/logman v0.1.0-alpha.2.0.20250102220228-981c015066a9/go.mod h1:CB77Kp75PKUodmcAw1e5Qtovae1wXSAMRDPI3D1KAr4=
+github.com/mishankov/logman v0.1.0-alpha.3.0.20250103170052-bb56507966fb h1:wncnVchjNK2fK2sandRqIP6BMuyOdJBFOj0Bn8UMw6w=
+github.com/mishankov/logman v0.1.0-alpha.3.0.20250103170052-bb56507966fb/go.mod h1:CB77Kp75PKUodmcAw1e5Qtovae1wXSAMRDPI3D1KAr4=
