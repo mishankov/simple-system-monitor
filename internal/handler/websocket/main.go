@@ -8,10 +8,10 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/websocket"
-	"github.com/mishankov/logman"
+	"github.com/mishankov/logman/loggers"
 )
 
-var logger = logman.NewDefaultLogger()
+var logger = loggers.NewDefaultLogger()
 
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
