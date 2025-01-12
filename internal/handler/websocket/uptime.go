@@ -2,7 +2,6 @@ package websocket
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"ssm/internal/domain/uptime"
 )
@@ -16,12 +15,12 @@ func NewUptimeHandler(svc uptime.UptimeService) *UptimeHandler {
 }
 
 func (uh *UptimeHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
-	log.Printf("%v requests uptime info", req.RemoteAddr)
-	defer log.Println("Stop sending uptime to", req.RemoteAddr)
+	logger.Infof("%v requests uptime info", req.RemoteAddr)
+	defer logger.Info("Stop sending uptime to", req.RemoteAddr)
 
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
-		log.Println("Error upgrading to ws:", err)
+		logger.Error("Error upgrading to ws:", err)
 		return
 	}
 	defer conn.Close()
@@ -33,7 +32,7 @@ func (uh *UptimeHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
 		uBytes, _ := json.Marshal(u)
 		err := conn.WriteMessage(1, uBytes)
 		if err != nil {
-			log.Printf("Error sending mem info to %v: %v", req.RemoteAddr, err)
+			logger.Errorf("Error sending mem info to %v: %v", req.RemoteAddr, err)
 			break
 		}
 	}
