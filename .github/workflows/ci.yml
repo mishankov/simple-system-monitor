@@ -56,7 +56,7 @@ jobs:
           path: ./cmd/server/build
 
       - name: Display structure of downloaded files
-        run: ls -R your/destination/dir
+        run: ls -R ./cmd/server/build
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@971e284b6050e8a5849b72094c50ab08da042db8
@@ -68,6 +68,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download built webapp from artifacts 
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp
+          path: ./cmd/server/build
 
       - uses: actions/setup-go@v5
         with:
