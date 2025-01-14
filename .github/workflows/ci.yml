@@ -55,6 +55,9 @@ jobs:
           name: webapp
           path: ./cmd/server/build
 
+      - name: Display structure of downloaded files
+        run: ls -R your/destination/dir
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@971e284b6050e8a5849b72094c50ab08da042db8
         with:
