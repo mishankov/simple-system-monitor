@@ -8,10 +8,14 @@ import (
 	"ssm/internal/fsutils"
 	"ssm/internal/handler/websocket"
 	"ssm/internal/service"
+
+	"github.com/mishankov/logman/loggers"
 )
 
 //go:embed all:build
 var assets embed.FS
+
+var logger = loggers.NewDefaultLogger()
 
 func main() {
 
@@ -20,7 +24,7 @@ func main() {
 		log.Fatal("Error loading config:", err)
 	}
 
-	log.Println(appConfig)
+	logger.Info(appConfig)
 
 	memInfoFileReader := fsutils.NewFileReader(appConfig.MemInfoConfig.Path)
 	memInfoRepo := sysinfo.NewMemInfoRepo(memInfoFileReader)
