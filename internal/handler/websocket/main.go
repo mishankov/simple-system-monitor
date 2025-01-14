@@ -27,10 +27,10 @@ type Server struct {
 func NewServer(memInfoHandler *MemInfoHandler, cpuInfoHandler *CPUInfoHandler, uptimeHandler *UptimeHandler, combinedHandler *CombinedHandler, assets embed.FS, port string) *Server {
 	r := chi.NewRouter()
 
-	r.Get("/meminfo", memInfoHandler.GetJsonWS)
-	r.Get("/cpuinfo", cpuInfoHandler.GetJsonWS)
-	r.Get("/uptime", uptimeHandler.GetJsonWS)
-	r.Get("/combined", combinedHandler.GetJsonWS)
+	r.Get("/meminfo", memInfoHandler.GetJSONWS)
+	r.Get("/cpuinfo", cpuInfoHandler.GetJSONWS)
+	r.Get("/uptime", uptimeHandler.GetJSONWS)
+	r.Get("/combined", combinedHandler.GetJSONWS)
 
 	serverRoot, err := fs.Sub(assets, "build")
 	if err != nil {

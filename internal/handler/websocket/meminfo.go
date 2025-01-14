@@ -15,7 +15,7 @@ func NewMemInfoHandler(svc meminfo.MemInfoService) *MemInfoHandler {
 	return &MemInfoHandler{svc: svc}
 }
 
-func (mif *MemInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
+func (mif *MemInfoHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) {
 	logger.Infof("%v requests mem info", req.RemoteAddr)
 	defer logger.Info("Stop sending mem info to", req.RemoteAddr)
 

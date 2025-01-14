@@ -15,7 +15,7 @@ func NewCPUInfoHandler(svc cpuinfo.CPUInfoService) *CPUInfoHandler {
 	return &CPUInfoHandler{svc: svc}
 }
 
-func (cih *CPUInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
+func (cih *CPUInfoHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) {
 	logger.Infof("%v requests CPU info", req.RemoteAddr)
 	defer logger.Info("Stop sending cpu info to", req.RemoteAddr)
 
