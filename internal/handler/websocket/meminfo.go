@@ -3,7 +3,8 @@ package websocket
 import (
 	"encoding/json"
 	"net/http"
-	"ssm/internal/domain/meminfo"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/meminfo"
 )
 
 type MemInfoHandler struct {

@@ -3,7 +3,8 @@ package websocket
 import (
 	"encoding/json"
 	"net/http"
-	"ssm/internal/domain/uptime"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/uptime"
 )
 
 type UptimeHandler struct {

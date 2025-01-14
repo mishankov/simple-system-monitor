@@ -2,9 +2,10 @@ package sysinfo
 
 import (
 	"bytes"
-	"ssm/internal/domain/meminfo"
 	"strconv"
 	"strings"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/meminfo"
 )
 
 type MemInfoRepo struct {

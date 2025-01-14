@@ -1,8 +1,9 @@
 package sysinfo
 
 import (
-	"ssm/internal/testutils"
 	"testing"
+
+	"github.com/mishankov/simple-system-monitor/internal/testutils"
 )
 
 func TestGetMemInfo(t *testing.T) {

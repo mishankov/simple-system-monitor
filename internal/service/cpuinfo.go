@@ -1,8 +1,9 @@
 package service
 
 import (
-	"ssm/internal/domain/cpuinfo"
 	"time"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/cpuinfo"
 )
 
 type CPUInfoService struct {

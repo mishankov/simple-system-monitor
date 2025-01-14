@@ -1,9 +1,10 @@
 package sysinfo
 
 import (
-	"ssm/internal/testutils"
 	"strconv"
 	"testing"
+
+	"github.com/mishankov/simple-system-monitor/internal/testutils"
 )
 
 func TestCPUInfo(t *testing.T) {

@@ -3,11 +3,12 @@ package main
 import (
 	"embed"
 	"log"
-	"ssm/internal/adapter/config"
-	"ssm/internal/adapter/sysinfo"
-	"ssm/internal/fsutils"
-	"ssm/internal/handler/websocket"
-	"ssm/internal/service"
+
+	"github.com/mishankov/simple-system-monitor/internal/adapter/config"
+	"github.com/mishankov/simple-system-monitor/internal/adapter/sysinfo"
+	"github.com/mishankov/simple-system-monitor/internal/fsutils"
+	"github.com/mishankov/simple-system-monitor/internal/handler/websocket"
+	"github.com/mishankov/simple-system-monitor/internal/service"
 
 	"github.com/mishankov/logman/loggers"
 )

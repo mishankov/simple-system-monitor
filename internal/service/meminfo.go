@@ -1,8 +1,9 @@
 package service
 
 import (
-	"ssm/internal/domain/meminfo"
 	"time"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/meminfo"
 )
 
 type MemInfoService struct {

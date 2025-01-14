@@ -1,8 +1,9 @@
 package service
 
 import (
-	"ssm/internal/domain/uptime"
 	"time"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/uptime"
 )
 
 type UptimeService struct {

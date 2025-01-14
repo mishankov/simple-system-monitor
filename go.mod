@@ -1,4 +1,4 @@
-module ssm
+module github.com/mishankov/simple-system-monitor
 
 go 1.23.4
 

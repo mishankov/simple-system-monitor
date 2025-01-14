@@ -3,7 +3,8 @@ package websocket
 import (
 	"encoding/json"
 	"net/http"
-	"ssm/internal/domain/cpuinfo"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/cpuinfo"
 )
 
 type CPUInfoHandler struct {

@@ -2,9 +2,10 @@ package sysinfo
 
 import (
 	"bytes"
-	"ssm/internal/domain/cpuinfo"
 	"strconv"
 	"strings"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/cpuinfo"
 )
 
 type CPUInfoRepo struct {

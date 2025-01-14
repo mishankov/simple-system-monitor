@@ -3,9 +3,10 @@ package websocket
 import (
 	"encoding/json"
 	"net/http"
-	"ssm/internal/domain/cpuinfo"
-	"ssm/internal/domain/meminfo"
-	"ssm/internal/domain/uptime"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/cpuinfo"
+	"github.com/mishankov/simple-system-monitor/internal/domain/meminfo"
+	"github.com/mishankov/simple-system-monitor/internal/domain/uptime"
 )
 
 type CombinedHandler struct {
