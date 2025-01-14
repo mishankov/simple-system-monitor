@@ -56,7 +56,9 @@ jobs:
       #     path: ./cmd/server/build
 
       - name: Create empty webapp dir
-        run: mkdir ./cmd/server/build
+        run: |
+          mkdir ./cmd/server/build
+          touch ./cmd/server/build/empty
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@971e284b6050e8a5849b72094c50ab08da042db8
