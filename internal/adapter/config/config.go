@@ -12,9 +12,9 @@ func getEnvOrDefault(key, def string) string {
 
 	if len(value) == 0 {
 		return def
-	} else {
-		return strings.TrimSpace(value)
 	}
+
+	return strings.TrimSpace(value)
 }
 
 const ()
