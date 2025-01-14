@@ -17,21 +17,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  golangci:
-    name: lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: stable
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@971e284b6050e8a5849b72094c50ab08da042db8
-        with:
-          version: v1.60
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -49,6 +34,12 @@ jobs:
           npm run check
           npm run lint
           npm run build
+
+      # Linting server
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@971e284b6050e8a5849b72094c50ab08da042db8
+        with:
+          version: v1.60
 
       # Building server
       - uses: actions/setup-go@v5
