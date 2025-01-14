@@ -11,9 +11,7 @@ on:
     branches: [main]
 
 env:
-  # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
-  # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -38,9 +36,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: webapp
-
-          # A file, directory or wildcard pattern that describes what to upload
-          # Required.
           path: ./cmd/server/build
 
   lint-server:
