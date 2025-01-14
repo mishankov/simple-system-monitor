@@ -17,12 +17,11 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  build-frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      # Building webapp
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
@@ -34,6 +33,20 @@ jobs:
           npm run check
           npm run lint
           npm run build
+
+      - name: Upload builded frontend
+        uses: actions/upload-artifact@v4
+        with:
+          name: webapp
+
+          # A file, directory or wildcard pattern that describes what to upload
+          # Required.
+          path: ./cmd/server/build
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
       # Linting server
       - name: golangci-lint
