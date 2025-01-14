@@ -4,13 +4,13 @@ import (
 	"embed"
 	"log"
 
+	"github.com/mishankov/logman/loggers"
+
 	"github.com/mishankov/simple-system-monitor/internal/adapter/config"
 	"github.com/mishankov/simple-system-monitor/internal/adapter/sysinfo"
 	"github.com/mishankov/simple-system-monitor/internal/fsutils"
 	"github.com/mishankov/simple-system-monitor/internal/handler/websocket"
 	"github.com/mishankov/simple-system-monitor/internal/service"
-
-	"github.com/mishankov/logman/loggers"
 )
 
 //go:embed all:build
