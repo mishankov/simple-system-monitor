@@ -44,16 +44,9 @@ jobs:
           path: ./cmd/server/build
 
   lint-server:
-    # needs: [ build-webapp ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # - name: Download built webapp from artifacts 
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: webapp
-      #     path: ./cmd/server/build
 
       - name: Create empty webapp dir
         run: |
