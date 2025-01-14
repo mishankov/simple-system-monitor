@@ -36,7 +36,7 @@ func (cir *CPUInfoRepo) GetCPUInfo() ([]cpuinfo.CPUInfo, error) {
 
 		data := strings.Split(line, " ")
 
-		cpuInfo.Id = data[0]
+		cpuInfo.ID = data[0]
 		cpuInfo.User, _ = strconv.Atoi(data[1])
 		cpuInfo.Nice, _ = strconv.Atoi(data[2])
 		cpuInfo.System, _ = strconv.Atoi(data[3])

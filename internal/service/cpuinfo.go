@@ -19,7 +19,7 @@ func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad) {
 	initial := []cpuinfo.CPULoad{}
 	prevData, _ := cis.repo.GetCPUInfo()
 	for _, cpuInfo := range prevData {
-		initial = append(initial, cpuinfo.CPULoad{Id: cpuInfo.Id, Load: 0})
+		initial = append(initial, cpuinfo.CPULoad{ID: cpuInfo.ID, Load: 0})
 	}
 	ch <- initial
 
@@ -42,7 +42,7 @@ func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad) {
 			totalDiff := total - prevTotal
 			idleDiff := idle - prevIdle
 
-			loads = append(loads, cpuinfo.CPULoad{Id: cpuInfo.Id, Load: float32(totalDiff-idleDiff) / float32(totalDiff)})
+			loads = append(loads, cpuinfo.CPULoad{ID: cpuInfo.ID, Load: float32(totalDiff-idleDiff) / float32(totalDiff)})
 		}
 
 		ch <- loads

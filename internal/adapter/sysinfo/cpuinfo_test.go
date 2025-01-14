@@ -33,8 +33,8 @@ softirq 36716593 241 3152731 81484 22133904 337881 0 66331 7962216 270 2981535`)
 	t.Run("test CPU ids", func(t *testing.T) {
 		for i, cpuInfo := range cpuInfos {
 			want := "cpu" + strconv.Itoa(i)
-			if cpuInfo.Id != want {
-				t.Fatalf("Got CPU id %v want %v", cpuInfo.Id, want)
+			if cpuInfo.ID != want {
+				t.Fatalf("Got CPU id %v want %v", cpuInfo.ID, want)
 			}
 		}
 	})

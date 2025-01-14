@@ -1,7 +1,7 @@
 package cpuinfo
 
 type CPUInfo struct {
-	Id        string
+	ID        string
 	User      int
 	Nice      int
 	System    int
@@ -19,7 +19,7 @@ type CPUInfoRepo interface {
 }
 
 type CPULoad struct {
-	Id   string  `json:"id"`
+	ID   string  `json:"id"`
 	Load float32 `json:"load"`
 }
 
