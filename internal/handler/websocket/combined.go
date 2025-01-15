@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 
@@ -27,9 +28,12 @@ func (coh *CombinedHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) 
 	logger.Infof("%v requests combined info", req.RemoteAddr)
 	defer logger.Info("Stop sending combined info to", req.RemoteAddr)
 
+	ctx, cancel := context.WithCancel(req.Context())
+
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
 		logger.Error("Error upgrading to ws:", err)
+		cancel()
 		return
 	}
 	defer conn.Close()
@@ -49,7 +53,7 @@ func (coh *CombinedHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) 
 
 	go func() {
 		ch := make(chan *meminfo.MemInfo)
-		go coh.memSvc.StreamMemInfo(ch)
+		go coh.memSvc.StreamMemInfo(ctx, ch)
 
 		for mi := range ch {
 			miBytes, _ := json.Marshal(mi)
@@ -71,7 +75,7 @@ func (coh *CombinedHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) 
 		err := conn.WriteMessage(1, m)
 		if err != nil {
 			logger.Errorf("Error sending data to %v: %v", req.RemoteAddr, err)
-			break
+			cancel()
 		}
 	}
 }

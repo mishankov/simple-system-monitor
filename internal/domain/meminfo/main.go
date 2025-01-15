@@ -1,5 +1,7 @@
 package meminfo
 
+import "context"
+
 type MemInfo struct {
 	MemTotal     int `json:"mem_total"`
 	MemFree      int `json:"mem_free"`
@@ -11,5 +13,5 @@ type MemInfoRepo interface {
 }
 
 type MemInfoService interface {
-	StreamMemInfo(ch chan *MemInfo)
+	StreamMemInfo(ctx context.Context, ch chan *MemInfo)
 }
