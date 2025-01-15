@@ -1,5 +1,7 @@
 package cpuinfo
 
+import "context"
+
 type CPUInfo struct {
 	ID        string
 	User      int
@@ -24,5 +26,5 @@ type CPULoad struct {
 }
 
 type CPUInfoService interface {
-	StreamCPULoad(ch chan []CPULoad)
+	StreamCPULoad(ctx context.Context, ch chan []CPULoad)
 }

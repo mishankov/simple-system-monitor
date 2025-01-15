@@ -30,7 +30,7 @@ func (mis *MemInfoService) StreamMemInfo(ctx context.Context, ch chan *meminfo.M
 
 		if done {
 			close(ch)
-			break
+			return
 		}
 	}
 }

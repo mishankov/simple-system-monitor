@@ -21,11 +21,11 @@ func (mif *MemInfoHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) {
 	defer logger.Info("Stop sending mem info to", req.RemoteAddr)
 
 	ctx, cancel := context.WithCancel(req.Context())
+	defer cancel()
 
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
 		logger.Error("Error upgrading to ws:", err)
-		cancel()
 		return
 	}
 	defer conn.Close()

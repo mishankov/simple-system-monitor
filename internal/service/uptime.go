@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"time"
 
 	"github.com/mishankov/simple-system-monitor/internal/domain/uptime"
@@ -15,11 +16,21 @@ func NewUptimeService(repo uptime.UptimeRepo, period int) *UptimeService {
 	return &UptimeService{repo: repo, period: period}
 }
 
-func (us *UptimeService) StreamUptime(ch chan *uptime.Uptime) {
+func (us *UptimeService) StreamUptime(ctx context.Context, ch chan *uptime.Uptime) {
 	for {
 		uptimeInfo, _ := us.repo.GetUptime()
 		ch <- uptimeInfo
 
-		time.Sleep(time.Duration(us.period) * time.Second)
+		done := false
+		select {
+		case <-time.After(time.Duration(us.period) * time.Second):
+		case <-ctx.Done():
+			done = true
+		}
+
+		if done {
+			close(ch)
+			return
+		}
 	}
 }

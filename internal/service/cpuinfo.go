@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"time"
 
 	"github.com/mishankov/simple-system-monitor/internal/domain/cpuinfo"
@@ -15,7 +16,7 @@ func NewCPUInfoService(repo cpuinfo.CPUInfoRepo, period int) *CPUInfoService {
 	return &CPUInfoService{repo: repo, period: period}
 }
 
-func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad) {
+func (cis *CPUInfoService) StreamCPULoad(ctx context.Context, ch chan []cpuinfo.CPULoad) {
 	initial := []cpuinfo.CPULoad{}
 	prevData, _ := cis.repo.GetCPUInfo()
 	for _, cpuInfo := range prevData {
@@ -48,6 +49,17 @@ func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad) {
 		ch <- loads
 
 		prevData = cpuInfos
-		time.Sleep(time.Duration(cis.period) * time.Second)
+
+		done := false
+		select {
+		case <-time.After(time.Duration(cis.period) * time.Second):
+		case <-ctx.Done():
+			done = true
+		}
+
+		if done {
+			close(ch)
+			return
+		}
 	}
 }

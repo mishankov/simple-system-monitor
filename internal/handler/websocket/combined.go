@@ -29,11 +29,11 @@ func (coh *CombinedHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) 
 	defer logger.Info("Stop sending combined info to", req.RemoteAddr)
 
 	ctx, cancel := context.WithCancel(req.Context())
+	defer cancel()
 
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
 		logger.Error("Error upgrading to ws:", err)
-		cancel()
 		return
 	}
 	defer conn.Close()
@@ -43,7 +43,7 @@ func (coh *CombinedHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) 
 	go func() {
 		ch := make(chan []cpuinfo.CPULoad)
 
-		go coh.cpuSvc.StreamCPULoad(ch)
+		go coh.cpuSvc.StreamCPULoad(ctx, ch)
 
 		for ci := range ch {
 			ciBytes, _ := json.Marshal(ci)
@@ -63,7 +63,7 @@ func (coh *CombinedHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) 
 
 	go func() {
 		ch := make(chan *uptime.Uptime)
-		go coh.uptimeSvc.StreamUptime(ch)
+		go coh.uptimeSvc.StreamUptime(ctx, ch)
 
 		for u := range ch {
 			uBytes, _ := json.Marshal(u)
