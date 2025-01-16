@@ -73,7 +73,7 @@ type FakeEnvProvider struct {
 	errMap      map[string]error
 }
 
-func (fep FakeEnvProvider) GetStringOrDefault(name, def string) string {
+func (fep FakeEnvProvider) GetStringOrDefault(_, def string) string {
 	if fep.defaultOnly {
 		return def
 	}
