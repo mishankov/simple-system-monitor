@@ -11,7 +11,8 @@ import (
 func TestReadData(t *testing.T) {
 	path := t.TempDir() + "/file.txt"
 	data := []byte("some data")
-	os.WriteFile(path, data, 0777)
+	err := os.WriteFile(path, data, 0777)
+	testutils.AssertError(t, err)
 
 	fr := fsutils.NewFileReader(path)
 	rdata, err := fr.ReadData()
