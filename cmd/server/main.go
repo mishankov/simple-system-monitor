@@ -6,8 +6,9 @@ import (
 
 	"github.com/mishankov/logman/loggers"
 
-	"github.com/mishankov/simple-system-monitor/internal/adapter/config"
 	"github.com/mishankov/simple-system-monitor/internal/adapter/sysinfo"
+	"github.com/mishankov/simple-system-monitor/internal/config"
+	"github.com/mishankov/simple-system-monitor/internal/env"
 	"github.com/mishankov/simple-system-monitor/internal/fsutils"
 	"github.com/mishankov/simple-system-monitor/internal/handler/websocket"
 	"github.com/mishankov/simple-system-monitor/internal/service"
@@ -19,8 +20,9 @@ var assets embed.FS
 var logger = loggers.NewDefaultLogger()
 
 func main() {
+	env := env.New()
 
-	appConfig, err := config.New()
+	appConfig, err := config.New(env)
 	if err != nil {
 		log.Fatal("Error loading config:", err)
 	}
