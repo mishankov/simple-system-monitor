@@ -4,9 +4,10 @@ import (
 	"context"
 	"testing"
 
+	"github.com/mishankov/testman/assert"
+
 	"github.com/mishankov/simple-system-monitor/internal/domain/uptime"
 	"github.com/mishankov/simple-system-monitor/internal/service"
-	"github.com/mishankov/testman/assert"
 )
 
 func TestStreamUptime(t *testing.T) {
