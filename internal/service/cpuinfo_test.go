@@ -11,6 +11,8 @@ import (
 )
 
 func TestStreamCPULoad(t *testing.T) {
+	t.Parallel()
+
 	us := service.NewCPUInfoService(FakeCPULoadRepo{}, 1)
 	ctx, cancel := context.WithCancel(context.Background())
 	ch := make(chan []cpuinfo.CPULoad)

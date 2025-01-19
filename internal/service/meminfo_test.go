@@ -11,6 +11,8 @@ import (
 )
 
 func TestStreamMemInfo(t *testing.T) {
+	t.Parallel()
+
 	us := service.NewMemInfoService(FakeMemInfoRepo{}, 1)
 	ctx, cancel := context.WithCancel(context.Background())
 	ch := make(chan *meminfo.MemInfo)

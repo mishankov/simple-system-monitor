@@ -11,6 +11,8 @@ import (
 )
 
 func TestStreamUptime(t *testing.T) {
+	t.Parallel()
+
 	us := service.NewUptimeService(FakeUptimeRepo{}, 1)
 	ctx, cancel := context.WithCancel(context.Background())
 	ch := make(chan *uptime.Uptime)
