@@ -1,6 +1,7 @@
 # Simple System Monitor
 
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/mishankov/simple-system-monitor/ci.yml)](https://github.com/mishankov/simple-system-monitor/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/mishankov/simple-system-monitor/graph/badge.svg?token=SACQUDDX8R)](https://codecov.io/gh/mishankov/simple-system-monitor)
 [![GitHub Release](https://img.shields.io/github/v/release/mishankov/simple-system-monitor?display_name=tag&label=latest%20release)](https://github.com/mishankov/simple-system-monitor/releases/latest)
 [![GitHub License](https://img.shields.io/github/license/mishankov/simple-system-monitor)](https://github.com/mishankov/simple-system-monitor/blob/main/LICENSE)
 
