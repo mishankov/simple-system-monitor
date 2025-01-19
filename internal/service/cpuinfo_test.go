@@ -29,6 +29,11 @@ func TestStreamCPULoad(t *testing.T) {
 		assert.Equal(t, ci[0].ID, "cpu123")
 	}
 
+	ci = <-ch
+	if assert.Equal(t, len(ci), 1) {
+		assert.Equal(t, ci[0].ID, "cpu123")
+	}
+
 	cancel()
 
 	_, ok := <-ch
