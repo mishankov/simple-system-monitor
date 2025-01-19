@@ -4,8 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/mishankov/simple-system-monitor/internal/fsutils"
 	"github.com/mishankov/testman/assert"
+
+	"github.com/mishankov/simple-system-monitor/internal/fsutils"
 )
 
 func TestReadData(t *testing.T) {

@@ -4,8 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/mishankov/simple-system-monitor/internal/env"
 	"github.com/mishankov/testman/assert"
+
+	"github.com/mishankov/simple-system-monitor/internal/env"
 )
 
 func TestEnv(t *testing.T) {
