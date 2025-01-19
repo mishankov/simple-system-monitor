@@ -3,8 +3,9 @@ package sysinfo
 import (
 	"testing"
 
-	"github.com/mishankov/simple-system-monitor/internal/testutils"
 	"github.com/mishankov/testman/assert"
+
+	"github.com/mishankov/simple-system-monitor/internal/testutils"
 )
 
 func TestGetUptime(t *testing.T) {

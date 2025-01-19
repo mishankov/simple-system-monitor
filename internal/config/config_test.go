@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/mishankov/simple-system-monitor/internal/config"
 	"github.com/mishankov/testman/assert"
+
+	"github.com/mishankov/simple-system-monitor/internal/config"
 )
 
 func TestDefaultConfig(t *testing.T) {
