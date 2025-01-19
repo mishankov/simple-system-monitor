@@ -6,6 +6,5 @@ require (
 	github.com/go-chi/chi/v5 v5.2.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/mishankov/logman v1.0.0
+	github.com/mishankov/testman v0.1.0
 )
-
-require github.com/mishankov/testman v0.1.0 // indirect
