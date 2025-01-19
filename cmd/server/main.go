@@ -3,24 +3,31 @@ package main
 import (
 	"embed"
 	"log"
-	"ssm/internal/adapter/config"
-	"ssm/internal/adapter/sysinfo"
-	"ssm/internal/fsutils"
-	"ssm/internal/handler/websocket"
-	"ssm/internal/service"
+
+	"github.com/mishankov/logman/loggers"
+
+	"github.com/mishankov/simple-system-monitor/internal/adapter/sysinfo"
+	"github.com/mishankov/simple-system-monitor/internal/config"
+	"github.com/mishankov/simple-system-monitor/internal/env"
+	"github.com/mishankov/simple-system-monitor/internal/fsutils"
+	"github.com/mishankov/simple-system-monitor/internal/handler/websocket"
+	"github.com/mishankov/simple-system-monitor/internal/service"
 )
 
 //go:embed all:build
 var assets embed.FS
 
-func main() {
+var logger = loggers.NewDefaultLogger()
 
-	appConfig, err := config.New()
+func main() {
+	env := env.New()
+
+	appConfig, err := config.New(env)
 	if err != nil {
 		log.Fatal("Error loading config:", err)
 	}
 
-	log.Println(appConfig)
+	logger.Info(appConfig)
 
 	memInfoFileReader := fsutils.NewFileReader(appConfig.MemInfoConfig.Path)
 	memInfoRepo := sysinfo.NewMemInfoRepo(memInfoFileReader)

@@ -1,9 +1,12 @@
 package sysinfo
 
 import (
-	"ssm/internal/testutils"
 	"strconv"
 	"testing"
+
+	"github.com/mishankov/testman/assert"
+
+	"github.com/mishankov/simple-system-monitor/internal/testutils"
 )
 
 func TestCPUInfo(t *testing.T) {
@@ -21,19 +24,18 @@ softirq 36716593 241 3152731 81484 22133904 337881 0 66331 7962216 270 2981535`)
 	repo := CPUInfoRepo{dataReader: testutils.NewFakeFileReader(input)}
 
 	cpuInfos, err := repo.GetCPUInfo()
-	testutils.AssertError(t, err)
+	assert.NoError(t, err)
 
 	t.Run("test CPUs count", func(t *testing.T) {
-		if len(cpuInfos) != 2 {
-			t.Fatalf("Got %d CPUs want 2", len(cpuInfos))
-		}
+		assert.Equal(t, len(cpuInfos), 2)
 	})
 
 	t.Run("test CPU ids", func(t *testing.T) {
 		for i, cpuInfo := range cpuInfos {
 			want := "cpu" + strconv.Itoa(i)
-			if cpuInfo.Id != want {
-				t.Fatalf("Got CPU id %v want %v", cpuInfo.Id, want)
+			assert.Equal(t, cpuInfo.ID, want)
+			if cpuInfo.ID != want {
+				t.Fatalf("Got CPU id %v want %v", cpuInfo.ID, want)
 			}
 		}
 	})

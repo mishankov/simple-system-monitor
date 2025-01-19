@@ -16,7 +16,7 @@ var logger = loggers.NewDefaultLogger()
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
-	CheckOrigin:     func(r *http.Request) bool { return true },
+	CheckOrigin:     func(_ *http.Request) bool { return true },
 }
 
 type Server struct {
@@ -27,10 +27,10 @@ type Server struct {
 func NewServer(memInfoHandler *MemInfoHandler, cpuInfoHandler *CPUInfoHandler, uptimeHandler *UptimeHandler, combinedHandler *CombinedHandler, assets embed.FS, port string) *Server {
 	r := chi.NewRouter()
 
-	r.Get("/meminfo", memInfoHandler.GetJsonWS)
-	r.Get("/cpuinfo", cpuInfoHandler.GetJsonWS)
-	r.Get("/uptime", uptimeHandler.GetJsonWS)
-	r.Get("/combined", combinedHandler.GetJsonWS)
+	r.Get("/meminfo", memInfoHandler.GetJSONWS)
+	r.Get("/cpuinfo", cpuInfoHandler.GetJSONWS)
+	r.Get("/uptime", uptimeHandler.GetJSONWS)
+	r.Get("/combined", combinedHandler.GetJSONWS)
 
 	serverRoot, err := fs.Sub(assets, "build")
 	if err != nil {

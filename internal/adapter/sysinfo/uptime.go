@@ -1,9 +1,10 @@
 package sysinfo
 
 import (
-	"ssm/internal/domain/uptime"
 	"strconv"
 	"strings"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/uptime"
 )
 
 type UptimeRepo struct {

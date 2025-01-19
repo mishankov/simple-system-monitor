@@ -2,22 +2,21 @@ package config
 
 import (
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
 )
 
-func getEnvOrDefault(key, def string) string {
-	value := os.Getenv(key)
+const (
+	DefaultPeriod     = 2
+	DefaultBasePath   = "/proc"
+	DefaultCPUPath    = "/stat"
+	DefaultMemPath    = "/meminfo"
+	DefaultUptimePath = "/uptime"
+	DefaultPort       = "4442"
+)
 
-	if len(value) == 0 {
-		return def
-	} else {
-		return strings.TrimSpace(value)
-	}
+type EnvProvider interface {
+	GetStringOrDefault(name, def string) string
+	GetIntOrDefault(name string, def int) (int, error)
 }
-
-const ()
 
 type MonitorConfig struct {
 	Path         string
@@ -33,52 +32,52 @@ type AppConfig struct {
 	UptimeConfig  MonitorConfig
 }
 
-func New() (*AppConfig, error) {
-	updatePeriod, err := strconv.Atoi(getEnvOrDefault("SSM_PERIOD", "2"))
+func New(envProvider EnvProvider) (*AppConfig, error) {
+	updatePeriod, err := envProvider.GetIntOrDefault("SSM_PERIOD", DefaultPeriod)
 	if err != nil {
 		return nil, err
 	}
 
-	path := getEnvOrDefault("SSM_PATH", "/proc")
+	path := envProvider.GetStringOrDefault("SSM_PATH", DefaultBasePath)
 
 	// CPU
 
-	updatePeriodCPU, err := strconv.Atoi(getEnvOrDefault("SSM_CPUINFO_PERIOD", strconv.Itoa(updatePeriod)))
+	updatePeriodCPU, err := envProvider.GetIntOrDefault("SSM_CPUINFO_PERIOD", updatePeriod)
 	if err != nil {
 		return nil, err
 	}
 
 	cpuInfoConfig := MonitorConfig{
-		Path:         getEnvOrDefault("SSM_CPUINFO_PATH", path+"/stat"),
+		Path:         envProvider.GetStringOrDefault("SSM_CPUINFO_PATH", path+DefaultCPUPath),
 		UpdatePeriod: updatePeriodCPU,
 	}
 
 	// Mem
 
-	updatePeriodMem, err := strconv.Atoi(getEnvOrDefault("SSM_MEMINFO_PERIOD", strconv.Itoa(updatePeriod)))
+	updatePeriodMem, err := envProvider.GetIntOrDefault("SSM_MEMINFO_PERIOD", updatePeriod)
 	if err != nil {
 		return nil, err
 	}
 
 	memInfoConfig := MonitorConfig{
-		Path:         getEnvOrDefault("SSM_MEMINFO_PATH", path+"/meminfo"),
+		Path:         envProvider.GetStringOrDefault("SSM_MEMINFO_PATH", path+DefaultMemPath),
 		UpdatePeriod: updatePeriodMem,
 	}
 
 	// Uptime
 
-	updatePeriodUptime, err := strconv.Atoi(getEnvOrDefault("SSM_UPTIME_PERIOD", strconv.Itoa(updatePeriod)))
+	updatePeriodUptime, err := envProvider.GetIntOrDefault("SSM_UPTIME_PERIOD", updatePeriod)
 	if err != nil {
 		return nil, err
 	}
 
 	uptimeConfig := MonitorConfig{
-		Path:         getEnvOrDefault("SSM_UPTIME_PATH", path+"/uptime"),
+		Path:         envProvider.GetStringOrDefault("SSM_UPTIME_PATH", path+DefaultUptimePath),
 		UpdatePeriod: updatePeriodUptime,
 	}
 
 	return &AppConfig{
-		Port:          getEnvOrDefault("SSM_PORT", "4442"),
+		Port:          envProvider.GetStringOrDefault("SSM_PORT", DefaultPort),
 		UpdatePeriod:  updatePeriod,
 		Path:          path,
 		CPUInfoConfig: cpuInfoConfig,

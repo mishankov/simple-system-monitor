@@ -1,9 +1,11 @@
 package websocket
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
-	"ssm/internal/domain/meminfo"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/meminfo"
 )
 
 type MemInfoHandler struct {
@@ -14,9 +16,12 @@ func NewMemInfoHandler(svc meminfo.MemInfoService) *MemInfoHandler {
 	return &MemInfoHandler{svc: svc}
 }
 
-func (mif *MemInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
+func (mif *MemInfoHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) {
 	logger.Infof("%v requests mem info", req.RemoteAddr)
 	defer logger.Info("Stop sending mem info to", req.RemoteAddr)
+
+	ctx, cancel := context.WithCancel(req.Context())
+	defer cancel()
 
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
@@ -26,14 +31,14 @@ func (mif *MemInfoHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
 	defer conn.Close()
 
 	ch := make(chan *meminfo.MemInfo)
-	go mif.svc.StreamMemInfo(ch)
+	go mif.svc.StreamMemInfo(ctx, ch)
 
 	for mi := range ch {
 		miBytes, _ := json.Marshal(mi)
 		err := conn.WriteMessage(1, miBytes)
 		if err != nil {
 			logger.Errorf("Error sending mem info to %v: %v", req.RemoteAddr, err)
-			break
+			cancel()
 		}
 	}
 }

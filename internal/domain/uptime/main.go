@@ -1,5 +1,7 @@
 package uptime
 
+import "context"
+
 type Uptime struct {
 	Uptime float32 `json:"uptime"`
 }
@@ -9,5 +11,5 @@ type UptimeRepo interface {
 }
 
 type UptimeService interface {
-	StreamUptime(ch chan *Uptime)
+	StreamUptime(ctx context.Context, ch chan *Uptime)
 }

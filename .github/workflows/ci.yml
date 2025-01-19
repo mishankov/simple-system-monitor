@@ -11,23 +11,69 @@ on:
     branches: [main]
 
 env:
-  # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
-  # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  lint-server:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      # Building webapp
+      - name: Create empty webapp dir
+        run: |
+          mkdir ./cmd/server/build
+          touch ./cmd/server/build/empty
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@971e284b6050e8a5849b72094c50ab08da042db8
+        with:
+          version: v1.60
+
+  test-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create empty webapp dir
+        run: |
+          mkdir ./cmd/server/build
+          touch ./cmd/server/build/empty
+
+      - name: "Test backend"
+        run: go test ./... -v -bench . -coverprofile coverage.txt
+  
+      - name: "Upload coverage report"
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-code-coverage
+          path: coverage.txt
+
+  upload-coverage-report:
+    needs: [ test-server ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: go-code-coverage
+  
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+  
+  build-webapp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
 
-      - name: Check and build frontend
+      - name: Check and build webapp
         working-directory: ./webapp
         run: |
           npm ci
@@ -35,19 +81,27 @@ jobs:
           npm run lint
           npm run build
 
-      # Building server
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.23
-
-      - name: "Test backend"
-        run: go test ./... -v -bench . -coverprofile coverage.out
-
-      - name: "Upload coverage report"
+      - name: Upload built webapp to artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: go-code-coverage
-          path: coverage.out
+          name: webapp
+          path: ./cmd/server/build
+  
+  build-server:
+    needs: [ build-webapp ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download built webapp from artifacts 
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp
+          path: ./cmd/server/build
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
 
       - name: "Build backend"  
         run: go build -o ./build/simple-server-monitor ./cmd/server
@@ -60,7 +114,7 @@ jobs:
           retention-days: 5
 
   docker:
-    needs: [ build ]
+    needs: [ build-server ]
     runs-on: ubuntu-latest
     permissions:
       contents: read

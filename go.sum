@@ -4,3 +4,5 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/mishankov/logman v1.0.0 h1:/JlLGP2hQ6kYaloILOB9iY6kbQbD4t2uDCMWe6RGDDU=
 github.com/mishankov/logman v1.0.0/go.mod h1:CB77Kp75PKUodmcAw1e5Qtovae1wXSAMRDPI3D1KAr4=
+github.com/mishankov/testman v0.1.0 h1:VVtaeEWc9p3jC+xuKjmXumRiXgxEPoxvx5D0lPIb1wk=
+github.com/mishankov/testman v0.1.0/go.mod h1:z+92aRrfpIzs6VE2Mtlmk0wDpRKi6NSNdY753ADpYX4=

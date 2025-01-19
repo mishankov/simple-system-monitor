@@ -1,11 +1,13 @@
 package websocket
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
-	"ssm/internal/domain/cpuinfo"
-	"ssm/internal/domain/meminfo"
-	"ssm/internal/domain/uptime"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/cpuinfo"
+	"github.com/mishankov/simple-system-monitor/internal/domain/meminfo"
+	"github.com/mishankov/simple-system-monitor/internal/domain/uptime"
 )
 
 type CombinedHandler struct {
@@ -22,9 +24,12 @@ func NewCombinedHandler(cpuSvc cpuinfo.CPUInfoService, memSvc meminfo.MemInfoSer
 	}
 }
 
-func (coh *CombinedHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) {
+func (coh *CombinedHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) {
 	logger.Infof("%v requests combined info", req.RemoteAddr)
 	defer logger.Info("Stop sending combined info to", req.RemoteAddr)
+
+	ctx, cancel := context.WithCancel(req.Context())
+	defer cancel()
 
 	conn, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
@@ -38,7 +43,7 @@ func (coh *CombinedHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) 
 	go func() {
 		ch := make(chan []cpuinfo.CPULoad)
 
-		go coh.cpuSvc.StreamCPULoad(ch)
+		go coh.cpuSvc.StreamCPULoad(ctx, ch)
 
 		for ci := range ch {
 			ciBytes, _ := json.Marshal(ci)
@@ -48,7 +53,7 @@ func (coh *CombinedHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) 
 
 	go func() {
 		ch := make(chan *meminfo.MemInfo)
-		go coh.memSvc.StreamMemInfo(ch)
+		go coh.memSvc.StreamMemInfo(ctx, ch)
 
 		for mi := range ch {
 			miBytes, _ := json.Marshal(mi)
@@ -58,7 +63,7 @@ func (coh *CombinedHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) 
 
 	go func() {
 		ch := make(chan *uptime.Uptime)
-		go coh.uptimeSvc.StreamUptime(ch)
+		go coh.uptimeSvc.StreamUptime(ctx, ch)
 
 		for u := range ch {
 			uBytes, _ := json.Marshal(u)
@@ -70,7 +75,7 @@ func (coh *CombinedHandler) GetJsonWS(w http.ResponseWriter, req *http.Request) 
 		err := conn.WriteMessage(1, m)
 		if err != nil {
 			logger.Errorf("Error sending data to %v: %v", req.RemoteAddr, err)
-			break
+			cancel()
 		}
 	}
 }

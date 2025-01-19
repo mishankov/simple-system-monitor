@@ -1,8 +1,10 @@
 package service
 
 import (
-	"ssm/internal/domain/cpuinfo"
+	"context"
 	"time"
+
+	"github.com/mishankov/simple-system-monitor/internal/domain/cpuinfo"
 )
 
 type CPUInfoService struct {
@@ -14,11 +16,11 @@ func NewCPUInfoService(repo cpuinfo.CPUInfoRepo, period int) *CPUInfoService {
 	return &CPUInfoService{repo: repo, period: period}
 }
 
-func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad) {
+func (cis *CPUInfoService) StreamCPULoad(ctx context.Context, ch chan []cpuinfo.CPULoad) {
 	initial := []cpuinfo.CPULoad{}
 	prevData, _ := cis.repo.GetCPUInfo()
 	for _, cpuInfo := range prevData {
-		initial = append(initial, cpuinfo.CPULoad{Id: cpuInfo.Id, Load: 0})
+		initial = append(initial, cpuinfo.CPULoad{ID: cpuInfo.ID, Load: 0})
 	}
 	ch <- initial
 
@@ -41,12 +43,23 @@ func (cis *CPUInfoService) StreamCPULoad(ch chan []cpuinfo.CPULoad) {
 			totalDiff := total - prevTotal
 			idleDiff := idle - prevIdle
 
-			loads = append(loads, cpuinfo.CPULoad{Id: cpuInfo.Id, Load: float32(totalDiff-idleDiff) / float32(totalDiff)})
+			loads = append(loads, cpuinfo.CPULoad{ID: cpuInfo.ID, Load: float32(totalDiff-idleDiff) / float32(totalDiff)})
 		}
 
 		ch <- loads
 
 		prevData = cpuInfos
-		time.Sleep(time.Duration(cis.period) * time.Second)
+
+		done := false
+		select {
+		case <-time.After(time.Duration(cis.period) * time.Second):
+		case <-ctx.Done():
+			done = true
+		}
+
+		if done {
+			close(ch)
+			return
+		}
 	}
 }
