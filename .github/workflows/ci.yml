@@ -97,7 +97,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: go-code-coverage
-          path: coverage.txt
   
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303
