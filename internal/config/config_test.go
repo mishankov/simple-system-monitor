@@ -6,31 +6,31 @@ import (
 	"testing"
 
 	"github.com/mishankov/simple-system-monitor/internal/config"
-	"github.com/mishankov/simple-system-monitor/internal/testutils"
+	"github.com/mishankov/testman/assert"
 )
 
 func TestDefaultConfig(t *testing.T) {
 	env := FakeEnvProvider{defaultOnly: true}
 
 	conf, err := config.New(env)
-	testutils.AssertError(t, err)
+	assert.NoError(t, err)
 
 	t.Run("test default values", func(t *testing.T) {
-		testutils.Assert(t, conf.Port, config.DefaultPort)
-		testutils.Assert(t, conf.UpdatePeriod, config.DefaultPeriod)
-		testutils.Assert(t, conf.Path, config.DefaultBasePath)
-		testutils.Assert(t, conf.CPUInfoConfig.Path, config.DefaultBasePath+config.DefaultCPUPath)
-		testutils.Assert(t, conf.CPUInfoConfig.UpdatePeriod, config.DefaultPeriod)
-		testutils.Assert(t, conf.MemInfoConfig.Path, config.DefaultBasePath+config.DefaultMemPath)
-		testutils.Assert(t, conf.MemInfoConfig.UpdatePeriod, config.DefaultPeriod)
-		testutils.Assert(t, conf.UptimeConfig.Path, config.DefaultBasePath+config.DefaultUptimePath)
-		testutils.Assert(t, conf.UptimeConfig.UpdatePeriod, config.DefaultPeriod)
+		assert.Equal(t, conf.Port, config.DefaultPort)
+		assert.Equal(t, conf.UpdatePeriod, config.DefaultPeriod)
+		assert.Equal(t, conf.Path, config.DefaultBasePath)
+		assert.Equal(t, conf.CPUInfoConfig.Path, config.DefaultBasePath+config.DefaultCPUPath)
+		assert.Equal(t, conf.CPUInfoConfig.UpdatePeriod, config.DefaultPeriod)
+		assert.Equal(t, conf.MemInfoConfig.Path, config.DefaultBasePath+config.DefaultMemPath)
+		assert.Equal(t, conf.MemInfoConfig.UpdatePeriod, config.DefaultPeriod)
+		assert.Equal(t, conf.UptimeConfig.Path, config.DefaultBasePath+config.DefaultUptimePath)
+		assert.Equal(t, conf.UptimeConfig.UpdatePeriod, config.DefaultPeriod)
 	})
 
 	t.Run("test string repr", func(t *testing.T) {
 		confStr := conf.String()
 
-		testutils.Assert(t, confStr, `SSM config:
+		assert.Equal(t, confStr, `SSM config:
 Port: 4442
 Global update period: 2
 Base path: /proc
@@ -57,10 +57,9 @@ func TestErrors(t *testing.T) {
 	for _, test := range testCases {
 		t.Run(fmt.Sprintf("test %v period error", test.key), func(t *testing.T) {
 			conf, err := config.New(FakeEnvProvider{errMap: map[string]error{test.key: test.err}})
-			if conf != nil {
-				t.Error("config expected to be nil, got:", conf)
-			}
-			testutils.Assert(t, err.Error(), test.err.Error())
+
+			assert.NotNil(t, conf)
+			assert.Equal(t, err.Error(), test.err.Error())
 		})
 	}
 

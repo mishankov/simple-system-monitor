@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/mishankov/simple-system-monitor/internal/env"
-	"github.com/mishankov/simple-system-monitor/internal/testutils"
+	"github.com/mishankov/testman/assert"
 )
 
 func TestEnv(t *testing.T) {
@@ -15,26 +15,26 @@ func TestEnv(t *testing.T) {
 		os.Setenv("MY_VAR", "value")
 
 		val := env.GetStringOrDefault("MY_VAR", "other value")
-		testutils.Assert(t, val, "value")
+		assert.Equal(t, val, "value")
 	})
 
 	t.Run("test string default", func(t *testing.T) {
 		val := env.GetStringOrDefault("EMPTY_VAR", "other value")
-		testutils.Assert(t, val, "other value")
+		assert.Equal(t, val, "other value")
 	})
 
 	t.Run("test int", func(t *testing.T) {
 		os.Setenv("MY_VAR", "1")
 
 		val, err := env.GetIntOrDefault("MY_VAR", 3)
-		testutils.AssertError(t, err)
-		testutils.Assert(t, val, 1)
+		assert.NoError(t, err)
+		assert.Equal(t, val, 1)
 	})
 
 	t.Run("test int default", func(t *testing.T) {
 		val, err := env.GetIntOrDefault("EMPTY_VAR", 3)
-		testutils.AssertError(t, err)
-		testutils.Assert(t, val, 3)
+		assert.NoError(t, err)
+		assert.Equal(t, val, 3)
 	})
 
 	t.Run("test int error", func(t *testing.T) {
@@ -44,6 +44,6 @@ func TestEnv(t *testing.T) {
 		if err == nil {
 			t.Error("Expected error, got nil")
 		}
-		testutils.Assert(t, val, 0)
+		assert.Equal(t, val, 0)
 	})
 }
