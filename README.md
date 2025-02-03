@@ -13,7 +13,7 @@
 
 See your server resourses on simple web UI
 
-![screenshor](images/screenshot.png)
+![screenshot](images/screenshot.png)
 
 ## Setup
 
