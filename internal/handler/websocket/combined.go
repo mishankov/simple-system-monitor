@@ -11,12 +11,12 @@ import (
 )
 
 type CombinedHandler struct {
-	cpuSvc    cpuinfo.CPUInfoService
-	memSvc    meminfo.MemInfoService
-	uptimeSvc uptime.UptimeService
+	cpuSvc    cpuinfo.Service
+	memSvc    meminfo.Service
+	uptimeSvc uptime.Service
 }
 
-func NewCombinedHandler(cpuSvc cpuinfo.CPUInfoService, memSvc meminfo.MemInfoService, uptimeSvc uptime.UptimeService) *CombinedHandler {
+func NewCombinedHandler(cpuSvc cpuinfo.Service, memSvc meminfo.Service, uptimeSvc uptime.Service) *CombinedHandler {
 	return &CombinedHandler{
 		cpuSvc:    cpuSvc,
 		memSvc:    memSvc,

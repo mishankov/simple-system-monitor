@@ -16,7 +16,7 @@ type CPUInfo struct {
 	GuestNice int
 }
 
-type CPUInfoRepo interface {
+type Repo interface {
 	GetCPUInfo() ([]CPUInfo, error)
 }
 
@@ -25,6 +25,6 @@ type CPULoad struct {
 	Load float32 `json:"load"`
 }
 
-type CPUInfoService interface {
+type Service interface {
 	StreamCPULoad(ctx context.Context, ch chan []CPULoad)
 }
