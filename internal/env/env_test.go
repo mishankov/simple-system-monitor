@@ -1,7 +1,6 @@
 package env_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/mishankov/testman/assert"
@@ -13,7 +12,7 @@ func TestEnv(t *testing.T) {
 	env := env.New()
 
 	t.Run("test string", func(t *testing.T) {
-		os.Setenv("MY_VAR", "value")
+		t.Setenv("MY_VAR", "value")
 
 		val := env.GetStringOrDefault("MY_VAR", "other value")
 		assert.Equal(t, val, "value")
@@ -25,7 +24,7 @@ func TestEnv(t *testing.T) {
 	})
 
 	t.Run("test int", func(t *testing.T) {
-		os.Setenv("MY_VAR", "1")
+		t.Setenv("MY_VAR", "1")
 
 		val, err := env.GetIntOrDefault("MY_VAR", 3)
 		assert.NoError(t, err)
@@ -39,7 +38,7 @@ func TestEnv(t *testing.T) {
 	})
 
 	t.Run("test int error", func(t *testing.T) {
-		os.Setenv("MY_VAR", "not int")
+		t.Setenv("MY_VAR", "not int")
 
 		val, err := env.GetIntOrDefault("MY_VAR", 3)
 		if err == nil {

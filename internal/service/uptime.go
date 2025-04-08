@@ -8,11 +8,11 @@ import (
 )
 
 type UptimeService struct {
-	repo   uptime.UptimeRepo
+	repo   uptime.Repo
 	period int
 }
 
-func NewUptimeService(repo uptime.UptimeRepo, period int) *UptimeService {
+func NewUptimeService(repo uptime.Repo, period int) *UptimeService {
 	return &UptimeService{repo: repo, period: period}
 }
 

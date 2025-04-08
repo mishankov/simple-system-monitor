@@ -6,10 +6,10 @@ type Uptime struct {
 	Uptime float32 `json:"uptime"`
 }
 
-type UptimeRepo interface {
+type Repo interface {
 	GetUptime() (*Uptime, error)
 }
 
-type UptimeService interface {
+type Service interface {
 	StreamUptime(ctx context.Context, ch chan *Uptime)
 }

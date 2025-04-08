@@ -9,10 +9,10 @@ import (
 )
 
 type UptimeHandler struct {
-	svc uptime.UptimeService
+	svc uptime.Service
 }
 
-func NewUptimeHandler(svc uptime.UptimeService) *UptimeHandler {
+func NewUptimeHandler(svc uptime.Service) *UptimeHandler {
 	return &UptimeHandler{svc: svc}
 }
 

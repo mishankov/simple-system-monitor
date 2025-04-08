@@ -8,11 +8,11 @@ import (
 )
 
 type MemInfoService struct {
-	repo   meminfo.MemInfoRepo
+	repo   meminfo.Repo
 	period int
 }
 
-func NewMemInfoService(repo meminfo.MemInfoRepo, period int) *MemInfoService {
+func NewMemInfoService(repo meminfo.Repo, period int) *MemInfoService {
 	return &MemInfoService{repo: repo, period: period}
 }
 

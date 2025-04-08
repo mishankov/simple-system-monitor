@@ -9,10 +9,10 @@ import (
 )
 
 type CPUInfoHandler struct {
-	svc cpuinfo.CPUInfoService
+	svc cpuinfo.Service
 }
 
-func NewCPUInfoHandler(svc cpuinfo.CPUInfoService) *CPUInfoHandler {
+func NewCPUInfoHandler(svc cpuinfo.Service) *CPUInfoHandler {
 	return &CPUInfoHandler{svc: svc}
 }
 

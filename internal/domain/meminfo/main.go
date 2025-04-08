@@ -8,10 +8,10 @@ type MemInfo struct {
 	MemAvailable int `json:"mem_available"`
 }
 
-type MemInfoRepo interface {
+type Repo interface {
 	GetMemInfo() (*MemInfo, error)
 }
 
-type MemInfoService interface {
+type Service interface {
 	StreamMemInfo(ctx context.Context, ch chan *MemInfo)
 }

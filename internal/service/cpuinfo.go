@@ -8,11 +8,11 @@ import (
 )
 
 type CPUInfoService struct {
-	repo   cpuinfo.CPUInfoRepo
+	repo   cpuinfo.Repo
 	period int
 }
 
-func NewCPUInfoService(repo cpuinfo.CPUInfoRepo, period int) *CPUInfoService {
+func NewCPUInfoService(repo cpuinfo.Repo, period int) *CPUInfoService {
 	return &CPUInfoService{repo: repo, period: period}
 }
 
