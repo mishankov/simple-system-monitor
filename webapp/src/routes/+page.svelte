@@ -3,6 +3,7 @@
 	import NumberFlow from '@number-flow/svelte';
 	import LoadLine from '$lib/components/LoadLine.svelte';
 	import Card from '$lib/components/Card.svelte';
+	import Uptime from '$lib/components/metrics/Uptime.svelte';
 
 	// Mem
 	let memUsed = $state(0.0);
@@ -20,12 +21,7 @@
 	 */
 	let socketCpu;
 
-	// Uptime
-	let uptimeData = $state({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-	/**
-	 * @type {WebSocket}
-	 */
-	let socketUptime;
+
 
 	onMount(() => {
 		socketMem = new WebSocket(`ws://${location.host}/meminfo`);
@@ -49,17 +45,7 @@
 			}
 		});
 
-		socketUptime = new WebSocket(`ws://${location.host}/uptime`);
-
-		socketUptime.addEventListener('message', function (event) {
-			if (event.data.length > 0) {
-				let uptimeSeconds = ~~JSON.parse(event.data).uptime;
-				uptimeData.seconds = uptimeSeconds % 60;
-				uptimeData.minutes = ~~(uptimeSeconds / 60) % 60;
-				uptimeData.hours = ~~(uptimeSeconds / 60 / 60) % 24;
-				uptimeData.days = ~~(uptimeSeconds / 60 / 60 / 24);
-			}
-		});
+		
 	});
 
 	onDestroy(() => {
@@ -69,10 +55,6 @@
 
 		if (socketCpu) {
 			socketCpu.close();
-		}
-
-		if (socketUptime) {
-			socketUptime.close();
 		}
 	});
 
@@ -121,35 +103,7 @@
 {/snippet}
 
 {#snippet uptime()}
-	<span>
-		{#if uptimeData.days != 0}
-			<NumberFlow
-				value={uptimeData.days}
-				format={{ style: 'unit', unit: 'day', unitDisplay: 'long' }}
-			/>
-		{/if}
-
-		{#if uptimeData.hours != 0}
-			<NumberFlow
-				value={uptimeData.hours}
-				format={{ style: 'unit', unit: 'hour', unitDisplay: 'long' }}
-			/>
-		{/if}
-
-		{#if uptimeData.minutes != 0}
-			<NumberFlow
-				value={uptimeData.minutes}
-				format={{ style: 'unit', unit: 'minute', unitDisplay: 'long' }}
-			/>
-		{/if}
-
-		{#if uptimeData.seconds != 0}
-			<NumberFlow
-				value={uptimeData.seconds}
-				format={{ style: 'unit', unit: 'second', unitDisplay: 'long' }}
-			/>
-		{/if}
-	</span>
+	<Uptime/>
 {/snippet}
 
 <style>
