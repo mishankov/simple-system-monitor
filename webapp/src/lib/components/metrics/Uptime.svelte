@@ -30,38 +30,48 @@
 	});
 </script>
 
-<span>
-	{#if uptimeData.days != 0}
-		<NumberFlow
-			value={uptimeData.days}
-			format={{ style: 'unit', unit: 'day', unitDisplay: 'long' }}
-		/>
-	{/if}
+<div class="container">
+	<span>
+		{#if uptimeData.days != 0}
+			<NumberFlow
+				value={uptimeData.days}
+				format={{ style: 'unit', unit: 'day', unitDisplay: 'long' }}
+			/>
+		{/if}
+	
+		{#if uptimeData.hours != 0}
+			<NumberFlow
+				value={uptimeData.hours}
+				format={{ style: 'unit', unit: 'hour', unitDisplay: 'long' }}
+			/>
+		{/if}
+	
+		{#if uptimeData.minutes != 0}
+			<NumberFlow
+				value={uptimeData.minutes}
+				format={{ style: 'unit', unit: 'minute', unitDisplay: 'long' }}
+			/>
+		{/if}
+	
+		{#if uptimeData.seconds != 0}
+			<NumberFlow
+				value={uptimeData.seconds}
+				format={{ style: 'unit', unit: 'second', unitDisplay: 'long' }}
+			/>
+		{/if}
+	</span>
+</div>
 
-	{#if uptimeData.hours != 0}
-		<NumberFlow
-			value={uptimeData.hours}
-			format={{ style: 'unit', unit: 'hour', unitDisplay: 'long' }}
-		/>
-	{/if}
-
-	{#if uptimeData.minutes != 0}
-		<NumberFlow
-			value={uptimeData.minutes}
-			format={{ style: 'unit', unit: 'minute', unitDisplay: 'long' }}
-		/>
-	{/if}
-
-	{#if uptimeData.seconds != 0}
-		<NumberFlow
-			value={uptimeData.seconds}
-			format={{ style: 'unit', unit: 'second', unitDisplay: 'long' }}
-		/>
-	{/if}
-</span>
 
 <style>
-	:global(*) {
+	* {
 		font-family: monospace;
+	}
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
 	}
 </style>

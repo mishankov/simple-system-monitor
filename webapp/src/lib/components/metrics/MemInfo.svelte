@@ -34,19 +34,28 @@
 	});
 </script>
 
-<LoadLine percent={memPercent * 100} />
-<span
-	><NumberFlow value={memUsed} format={{ maximumFractionDigits: 2 }} /> / <NumberFlow
-		value={memTotal}
-		format={{ maximumFractionDigits: 2 }}
-	/> Gb (<NumberFlow
-		value={memPercent}
-		format={{ style: 'percent', maximumFractionDigits: 2 }}
-	/>)</span
->
+<div class="container">
+	<LoadLine percent={memPercent * 100} />
+	<span
+		><NumberFlow value={memUsed} format={{ maximumFractionDigits: 2 }} /> / <NumberFlow
+			value={memTotal}
+			format={{ maximumFractionDigits: 2 }}
+		/> Gb (<NumberFlow
+			value={memPercent}
+			format={{ style: 'percent', maximumFractionDigits: 2 }}
+		/>)</span
+	>
+</div>
 
 <style>
 	* {
 		font-family: monospace;
+	}
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
 	}
 </style>

@@ -27,21 +27,30 @@
 	});
 </script>
 
-<div class="cpu-list">
-	{#each cpus as cpu (cpu.id)}
-		{#if cpu.id != ''}
-			<div class="cpu-line">
-				<span class="cpu-id">{cpu.id}</span>
-				<LoadLine percent={cpu.load * 100} />
-				<NumberFlow value={cpu.load} format={{ style: 'percent', maximumFractionDigits: 2 }} />
-			</div>
-		{/if}
-	{/each}
+<div class="container">
+	<div class="cpu-list">
+		{#each cpus as cpu (cpu.id)}
+			{#if cpu.id != ''}
+				<div class="cpu-line">
+					<span class="cpu-id">{cpu.id}</span>
+					<LoadLine percent={cpu.load * 100} />
+					<NumberFlow value={cpu.load} format={{ style: 'percent', maximumFractionDigits: 2 }} />
+				</div>
+			{/if}
+		{/each}
+	</div>
 </div>
 
 <style>
 	* {
 		font-family: monospace;
+	}
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
 	}
 
 	.cpu-list {
