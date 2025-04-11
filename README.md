@@ -57,3 +57,8 @@ Configuration of `simple-system-monitor` is done with environment variables. Ava
 - `SSM_MEMINFO_PATH` - path to take RAM information from. Default is `SSM_PATH` value + `/meminfo`
 - `SSM_UPTIME_PERIOD` - period for updating uptime monitoring in seconds. Default is `SSM_PERIOD` value
 - `SSM_UPTIME_PATH` - path to take uptime information from. Default is `SSM_PATH` value + `/uptime`
+
+## Available pages
+
+- `/` - page with all available metrics
+- `/metrics/cpuinfo`, `/metrics/meminfo`, `/metrics/uptime` - dedicated pages for every type of monitoring. Can be used by including in other pages via iframe
