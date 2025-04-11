@@ -1,5 +1,5 @@
 <script>
-import Card from '$lib/components/Card.svelte';
+	import Card from '$lib/components/Card.svelte';
 	import Uptime from '$lib/components/metrics/Uptime.svelte';
 	import CpuInfo from '$lib/components/metrics/CPUInfo.svelte';
 	import MemInfo from '$lib/components/metrics/MemInfo.svelte';
@@ -18,15 +18,15 @@ import Card from '$lib/components/Card.svelte';
 </div>
 
 {#snippet ram()}
-	<MemInfo/>
+	<MemInfo />
 {/snippet}
 
 {#snippet cpu()}
-	<CpuInfo/>
+	<CpuInfo />
 {/snippet}
 
 {#snippet uptime()}
-	<Uptime/>
+	<Uptime />
 {/snippet}
 
 <style>

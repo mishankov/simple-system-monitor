@@ -1,5 +1,5 @@
 <script>
-	import CpuInfo from "$lib/components/metrics/CPUInfo.svelte";
+	import CpuInfo from '$lib/components/metrics/CPUInfo.svelte';
 </script>
 
-<CpuInfo/>
+<CpuInfo />

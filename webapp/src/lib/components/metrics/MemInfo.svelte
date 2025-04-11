@@ -1,9 +1,9 @@
 <script>
-	import NumberFlow from "@number-flow/svelte";
-	import { onMount, onDestroy } from "svelte";
-	import LoadLine from "$lib/components/LoadLine.svelte";
+	import NumberFlow from '@number-flow/svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import LoadLine from '$lib/components/LoadLine.svelte';
 
-  // Mem
+	// Mem
 	let memUsed = $state(0.0);
 	let memTotal = $state(0.0);
 	let memPercent = $state(0.0);
@@ -11,7 +11,6 @@
 	 * @type {WebSocket}
 	 */
 	let socketMem;
-
 
 	onMount(() => {
 		socketMem = new WebSocket(`ws://${location.host}/meminfo`);
@@ -35,20 +34,19 @@
 	});
 </script>
 
-
 <LoadLine percent={memPercent * 100} />
-	<span
-		><NumberFlow value={memUsed} format={{maximumFractionDigits: 2}} /> / <NumberFlow
-			value={memTotal}
-			format={{maximumFractionDigits: 2}}
-		/> Gb (<NumberFlow
-			value={memPercent}
-			format={{ style: 'percent', maximumFractionDigits: 2 }}
-		/>)</span
-	>
+<span
+	><NumberFlow value={memUsed} format={{ maximumFractionDigits: 2 }} /> / <NumberFlow
+		value={memTotal}
+		format={{ maximumFractionDigits: 2 }}
+	/> Gb (<NumberFlow
+		value={memPercent}
+		format={{ style: 'percent', maximumFractionDigits: 2 }}
+	/>)</span
+>
 
 <style>
-  * {
+	* {
 		font-family: monospace;
 	}
 </style>

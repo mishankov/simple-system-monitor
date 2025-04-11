@@ -1,16 +1,16 @@
 <script>
-	import NumberFlow from "@number-flow/svelte";
-	import { onDestroy, onMount } from "svelte";
+	import NumberFlow from '@number-flow/svelte';
+	import { onDestroy, onMount } from 'svelte';
 
-  // Uptime
+	// Uptime
 	let uptimeData = $state({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 	/**
 	 * @type {WebSocket}
 	 */
 	let socketUptime;
 
-  onMount(() => {
-    socketUptime = new WebSocket(`ws://${location.host}/uptime`);
+	onMount(() => {
+		socketUptime = new WebSocket(`ws://${location.host}/uptime`);
 
 		socketUptime.addEventListener('message', function (event) {
 			if (event.data.length > 0) {
@@ -21,47 +21,47 @@
 				uptimeData.days = ~~(uptimeSeconds / 60 / 60 / 24);
 			}
 		});
-  })
+	});
 
-  onDestroy(() => {
-    if (socketUptime) {
-      socketUptime.close()
-    }
-  })
+	onDestroy(() => {
+		if (socketUptime) {
+			socketUptime.close();
+		}
+	});
 </script>
 
 <span>
-  {#if uptimeData.days != 0}
-    <NumberFlow
-      value={uptimeData.days}
-      format={{ style: 'unit', unit: 'day', unitDisplay: 'long' }}
-    />
-  {/if}
+	{#if uptimeData.days != 0}
+		<NumberFlow
+			value={uptimeData.days}
+			format={{ style: 'unit', unit: 'day', unitDisplay: 'long' }}
+		/>
+	{/if}
 
-  {#if uptimeData.hours != 0}
-    <NumberFlow
-      value={uptimeData.hours}
-      format={{ style: 'unit', unit: 'hour', unitDisplay: 'long' }}
-    />
-  {/if}
+	{#if uptimeData.hours != 0}
+		<NumberFlow
+			value={uptimeData.hours}
+			format={{ style: 'unit', unit: 'hour', unitDisplay: 'long' }}
+		/>
+	{/if}
 
-  {#if uptimeData.minutes != 0}
-    <NumberFlow
-      value={uptimeData.minutes}
-      format={{ style: 'unit', unit: 'minute', unitDisplay: 'long' }}
-    />
-  {/if}
+	{#if uptimeData.minutes != 0}
+		<NumberFlow
+			value={uptimeData.minutes}
+			format={{ style: 'unit', unit: 'minute', unitDisplay: 'long' }}
+		/>
+	{/if}
 
-  {#if uptimeData.seconds != 0}
-    <NumberFlow
-      value={uptimeData.seconds}
-      format={{ style: 'unit', unit: 'second', unitDisplay: 'long' }}
-    />
-  {/if}
+	{#if uptimeData.seconds != 0}
+		<NumberFlow
+			value={uptimeData.seconds}
+			format={{ style: 'unit', unit: 'second', unitDisplay: 'long' }}
+		/>
+	{/if}
 </span>
 
 <style>
-  :global(*) {
+	:global(*) {
 		font-family: monospace;
 	}
 </style>
