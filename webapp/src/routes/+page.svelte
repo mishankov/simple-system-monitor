@@ -4,6 +4,7 @@
 	import LoadLine from '$lib/components/LoadLine.svelte';
 	import Card from '$lib/components/Card.svelte';
 	import Uptime from '$lib/components/metrics/Uptime.svelte';
+	import CpuInfo from '$lib/components/metrics/CPUInfo.svelte';
 
 	// Mem
 	let memUsed = $state(0.0);
@@ -14,12 +15,7 @@
 	 */
 	let socketMem;
 
-	// CPU
-	let cpus = $state([{ id: '', load: 0 }]);
-	/**
-	 * @type {WebSocket}
-	 */
-	let socketCpu;
+
 
 
 
@@ -37,13 +33,7 @@
 			}
 		});
 
-		socketCpu = new WebSocket(`ws://${location.host}/cpuinfo`);
-
-		socketCpu.addEventListener('message', function (event) {
-			if (event.data.length > 0) {
-				cpus = JSON.parse(event.data);
-			}
-		});
+		
 
 		
 	});
@@ -53,9 +43,7 @@
 			socketMem.close();
 		}
 
-		if (socketCpu) {
-			socketCpu.close();
-		}
+		
 	});
 
 	const numberFormat = {
@@ -89,17 +77,7 @@
 {/snippet}
 
 {#snippet cpu()}
-	<div class="cpu-list">
-		{#each cpus as cpu (cpu.id)}
-			{#if cpu.id != ''}
-				<div class="cpu-line">
-					<span class="cpu-id">{cpu.id}</span>
-					<LoadLine percent={cpu.load * 100} />
-					<NumberFlow value={cpu.load} format={{ style: 'percent', maximumFractionDigits: 2 }} />
-				</div>
-			{/if}
-		{/each}
-	</div>
+	<CpuInfo/>
 {/snippet}
 
 {#snippet uptime()}
