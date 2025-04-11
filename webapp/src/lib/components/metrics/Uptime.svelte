@@ -38,21 +38,21 @@
 				format={{ style: 'unit', unit: 'day', unitDisplay: 'long' }}
 			/>
 		{/if}
-	
+
 		{#if uptimeData.hours != 0}
 			<NumberFlow
 				value={uptimeData.hours}
 				format={{ style: 'unit', unit: 'hour', unitDisplay: 'long' }}
 			/>
 		{/if}
-	
+
 		{#if uptimeData.minutes != 0}
 			<NumberFlow
 				value={uptimeData.minutes}
 				format={{ style: 'unit', unit: 'minute', unitDisplay: 'long' }}
 			/>
 		{/if}
-	
+
 		{#if uptimeData.seconds != 0}
 			<NumberFlow
 				value={uptimeData.seconds}
@@ -61,7 +61,6 @@
 		{/if}
 	</span>
 </div>
-
 
 <style>
 	* {
