@@ -63,10 +63,6 @@
 </div>
 
 <style>
-	* {
-		font-family: monospace;
-	}
-
 	.container {
 		display: flex;
 		flex-direction: column;
