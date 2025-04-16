@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/mishankov/logman/loggers"
+
 	"github.com/mishankov/simple-system-monitor/internal/handler/websocket"
 )
 
