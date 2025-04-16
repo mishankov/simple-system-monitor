@@ -16,7 +16,7 @@ export default defineConfig({
 			'/uptime': {
 				target: 'http://localhost:4442',
 				ws: true
-			}, 
+			},
 			'/user-assets/vars.css': {
 				target: 'http://localhost:4442'
 			}

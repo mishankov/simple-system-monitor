@@ -5,14 +5,14 @@ const config = {
 	kit: {
 		adapter: adapter({ pages: '../cmd/server/build' }),
 		prerender: {
-      handleHttpError: ({ path, message }) => {
-        if (path === '/user-assets/vars.css') {
-					console.log("Ignoring error about /user-assets/vars.css")
+			handleHttpError: ({ path, message }) => {
+				if (path === '/user-assets/vars.css') {
+					console.log('Ignoring error about /user-assets/vars.css');
 					return;
-				};
-        throw new Error(message);
-      }
-    }
+				}
+				throw new Error(message);
+			}
+		}
 	}
 };
 
