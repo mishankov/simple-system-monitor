@@ -1,0 +1,10 @@
+body {
+  --component-loadline-empty-color: lightgray;
+  --component-loadline-filled-color: seagreen;
+  --component-loadline-height: 15px;
+  --component-loadline-width: 250px;
+
+  --component-card-backgroud-color: white;
+  --component-card-backgroud-border: 1px solid lightgray;
+  --component-card-header-color: black;
+}

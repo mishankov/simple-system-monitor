@@ -10,6 +10,10 @@
 </div>
 
 <style>
+	h2 {
+		color: var(--component-card-header-color);
+	}
+
 	.card {
 		display: flex;
 		flex-direction: column;
@@ -19,10 +23,12 @@
 		padding: 10px;
 
 		border-radius: 10px;
-		border: 1px solid lightgray;
+		border:  var(--component-card-backgroud-border);
 		box-shadow:
 			0 2px 4px 0 rgba(0, 0, 0, 0.2),
 			0 3px 6px 0 rgba(0, 0, 0, 0.19);
+
+		background-color: var(--component-card-backgroud-color);
 	}
 
 	.content {
