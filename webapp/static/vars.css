@@ -7,4 +7,7 @@ body {
 	--component-card-backgroud-color: white;
 	--component-card-backgroud-border: 1px solid lightgray;
 	--component-card-header-color: black;
+
+	--body-background-color: white;
+	--body-text-color: black;
 }
