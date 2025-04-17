@@ -20,6 +20,7 @@ func TestDefaultConfig(t *testing.T) {
 		assert.Equal(t, conf.Port, config.DefaultPort)
 		assert.Equal(t, conf.UpdatePeriod, config.DefaultPeriod)
 		assert.Equal(t, conf.Path, config.DefaultBasePath)
+		assert.Equal(t, conf.AssetsPath, config.DefaultUserAssetsPath)
 		assert.Equal(t, conf.CPUInfoConfig.Path, config.DefaultBasePath+config.DefaultCPUPath)
 		assert.Equal(t, conf.CPUInfoConfig.UpdatePeriod, config.DefaultPeriod)
 		assert.Equal(t, conf.MemInfoConfig.Path, config.DefaultBasePath+config.DefaultMemPath)
@@ -35,6 +36,7 @@ func TestDefaultConfig(t *testing.T) {
 Port: 4442
 Global update period: 2
 Base path: /proc
+User assets path: ./user-assets
 CPU info file path: /proc/stat
 CPU info update period: 2
 Mem info file path: /proc/meminfo

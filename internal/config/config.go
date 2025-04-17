@@ -5,12 +5,13 @@ import (
 )
 
 const (
-	DefaultPeriod     = 2
-	DefaultBasePath   = "/proc"
-	DefaultCPUPath    = "/stat"
-	DefaultMemPath    = "/meminfo"
-	DefaultUptimePath = "/uptime"
-	DefaultPort       = "4442"
+	DefaultPeriod         = 2
+	DefaultBasePath       = "/proc"
+	DefaultUserAssetsPath = "./user-assets"
+	DefaultCPUPath        = "/stat"
+	DefaultMemPath        = "/meminfo"
+	DefaultUptimePath     = "/uptime"
+	DefaultPort           = "4442"
 )
 
 type EnvProvider interface {
@@ -27,6 +28,7 @@ type AppConfig struct {
 	Port          string
 	UpdatePeriod  int
 	Path          string
+	AssetsPath    string
 	CPUInfoConfig MonitorConfig
 	MemInfoConfig MonitorConfig
 	UptimeConfig  MonitorConfig
@@ -39,6 +41,7 @@ func New(envProvider EnvProvider) (*AppConfig, error) {
 	}
 
 	path := envProvider.GetStringOrDefault("SSM_PATH", DefaultBasePath)
+	assetsPath := envProvider.GetStringOrDefault("SSM_USER_ASSETS_PATH", DefaultUserAssetsPath)
 
 	// CPU
 
@@ -80,6 +83,7 @@ func New(envProvider EnvProvider) (*AppConfig, error) {
 		Port:          envProvider.GetStringOrDefault("SSM_PORT", DefaultPort),
 		UpdatePeriod:  updatePeriod,
 		Path:          path,
+		AssetsPath:    assetsPath,
 		CPUInfoConfig: cpuInfoConfig,
 		MemInfoConfig: memInfoConfig,
 		UptimeConfig:  uptimeConfig,
@@ -91,6 +95,7 @@ func (ac *AppConfig) String() string {
 	out += fmt.Sprintf("\nPort: %v", ac.Port)
 	out += fmt.Sprintf("\nGlobal update period: %v", ac.UpdatePeriod)
 	out += fmt.Sprintf("\nBase path: %v", ac.Path)
+	out += fmt.Sprintf("\nUser assets path: %v", ac.AssetsPath)
 	out += fmt.Sprintf("\nCPU info file path: %v", ac.CPUInfoConfig.Path)
 	out += fmt.Sprintf("\nCPU info update period: %v", ac.CPUInfoConfig.UpdatePeriod)
 	out += fmt.Sprintf("\nMem info file path: %v", ac.MemInfoConfig.Path)

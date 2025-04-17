@@ -8,14 +8,14 @@
 
 <style>
 	.outer {
-		height: 15px;
-		width: 250px;
-		background-color: lightgray;
+		height: var(--component-loadline-height);
+		width: var(--component-loadline-width);
+		background-color: var(--component-loadline-empty-color);
 	}
 
 	.inner {
 		height: 100%;
-		background-color: seagreen;
+		background-color: var(--component-loadline-filled-color);
 		transition: width 0.5s;
 	}
 </style>

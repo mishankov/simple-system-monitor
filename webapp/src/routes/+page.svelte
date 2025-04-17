@@ -30,10 +30,6 @@
 {/snippet}
 
 <style>
-	:global(*) {
-		font-family: monospace;
-	}
-
 	.container {
 		height: 100vh;
 		width: 100vw;

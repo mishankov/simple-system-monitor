@@ -1,0 +1,8 @@
+* {
+	font-family: monospace;
+}
+
+body {
+	background-color: var(--body-background-color);
+	color: var(--body-text-color);
+}

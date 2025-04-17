@@ -11,6 +11,7 @@ import (
 	"github.com/mishankov/simple-system-monitor/internal/env"
 	"github.com/mishankov/simple-system-monitor/internal/fsutils"
 	"github.com/mishankov/simple-system-monitor/internal/handler/websocket"
+	"github.com/mishankov/simple-system-monitor/internal/server"
 	"github.com/mishankov/simple-system-monitor/internal/service"
 )
 
@@ -46,7 +47,7 @@ func main() {
 
 	combinedHandler := websocket.NewCombinedHandler(cpuInfoService, memInfoService, uptimeService)
 
-	server := websocket.NewServer(memInfoHandler, cpuInfoHandler, uptimeHandler, combinedHandler, assets, appConfig.Port)
+	server := server.NewServer(memInfoHandler, cpuInfoHandler, uptimeHandler, combinedHandler, assets, appConfig.AssetsPath, appConfig.Port)
 
 	if err := server.Serve(); err != nil {
 		log.Println("Error starting server:", err)
