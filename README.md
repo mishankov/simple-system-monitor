@@ -35,6 +35,7 @@ simple-system-monitor:
     - SSM_PATH="/hostfs/proc"
   volumes:
     - /:/hostfs:ro
+    - ./user-assets/:/app/user-assets # mount user assets to container
   restart: 'unless-stopped'
 ```
 
@@ -61,8 +62,15 @@ Configuration of `simple-system-monitor` is done with environment variables. Ava
 - `SSM_MEMINFO_PATH` - path to take RAM information from. Default is `SSM_PATH` value + `/meminfo`
 - `SSM_UPTIME_PERIOD` - period for updating uptime monitoring in seconds. Default is `SSM_PERIOD` value
 - `SSM_UPTIME_PATH` - path to take uptime information from. Default is `SSM_PATH` value + `/uptime`
+- `SSM_USER_ASSETS_PATH` - path to user defined assets like custom CSS. Default is `./user-assets`
 
 ## Available pages
 
 - `/` - page with all available metrics
 - `/metrics/cpuinfo`, `/metrics/meminfo`, `/metrics/uptime` - dedicated pages for every type of monitoring. Can be used by including in other pages via iframe
+
+## Theming
+
+Theming available by supplying custom CSS file `user.css` at `SSM_USER_ASSETS_PATH`. A few CSS variables are available. See full list [here](./webapp/static/vars.css).
+
+See premade themes [here](./docs/themes.md)

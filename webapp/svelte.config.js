@@ -6,7 +6,7 @@ const config = {
 		adapter: adapter({ pages: '../cmd/server/build' }),
 		prerender: {
 			handleHttpError: ({ path, message }) => {
-				if (path === '/user-assets/vars.css') {
+				if (path === '/user-assets/user.css') {
 					console.log('Ignoring error about /user-assets/vars.css');
 					return;
 				}

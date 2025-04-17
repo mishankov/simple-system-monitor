@@ -47,7 +47,7 @@ func main() {
 
 	combinedHandler := websocket.NewCombinedHandler(cpuInfoService, memInfoService, uptimeService)
 
-	server := server.NewServer(memInfoHandler, cpuInfoHandler, uptimeHandler, combinedHandler, assets, appConfig.Port)
+	server := server.NewServer(memInfoHandler, cpuInfoHandler, uptimeHandler, combinedHandler, assets, appConfig.AssetsPath, appConfig.Port)
 
 	if err := server.Serve(); err != nil {
 		log.Println("Error starting server:", err)

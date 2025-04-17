@@ -19,7 +19,7 @@ type Server struct {
 	port   string
 }
 
-func NewServer(memInfoHandler *websocket.MemInfoHandler, cpuInfoHandler *websocket.CPUInfoHandler, uptimeHandler *websocket.UptimeHandler, combinedHandler *websocket.CombinedHandler, assets embed.FS, port string) *Server {
+func NewServer(memInfoHandler *websocket.MemInfoHandler, cpuInfoHandler *websocket.CPUInfoHandler, uptimeHandler *websocket.UptimeHandler, combinedHandler *websocket.CombinedHandler, assets embed.FS, userAssetsPath string, port string) *Server {
 	r := chi.NewRouter()
 
 	r.Get("/meminfo", memInfoHandler.GetJSONWS)
@@ -27,7 +27,7 @@ func NewServer(memInfoHandler *websocket.MemInfoHandler, cpuInfoHandler *websock
 	r.Get("/uptime", uptimeHandler.GetJSONWS)
 	r.Get("/combined", combinedHandler.GetJSONWS)
 
-	r.Handle("/user-assets/*", http.StripPrefix("/user-assets/", http.FileServer(http.Dir("./user-assets"))))
+	r.Handle("/user-assets/*", http.StripPrefix("/user-assets/", http.FileServer(http.Dir(userAssetsPath))))
 
 	serverRoot, err := fs.Sub(assets, "build")
 	if err != nil {
