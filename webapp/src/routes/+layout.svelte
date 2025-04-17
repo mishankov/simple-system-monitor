@@ -4,9 +4,3 @@
 </script>
 
 {@render children()}
-
-<style>
-	:global(*) {
-		font-family: monospace;
-	}
-</style>
