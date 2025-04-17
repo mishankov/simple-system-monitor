@@ -13,11 +13,11 @@
 
 See your server resourses on simple web UI
 
-<div style="display: flex">
-  <img src="docs/images/theme-default.png"/>
-  <img src="docs/images/theme-ayu.png"/>
-  <img src="docs/images/theme-solarized-light.png"/>
-</div>
+<p align="middle">
+  <img src="docs/images/theme-default.png" width="32%"/>
+  <img src="docs/images/theme-ayu.png" width="32%"/>
+  <img src="docs/images/theme-solarized-light.png" width="32%"/>
+</p>
 
 ## Setup
 
