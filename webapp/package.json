@@ -29,6 +29,6 @@
 		"vite": "^6.3.4"
 	},
 	"dependencies": {
-		"@number-flow/svelte": "^0.3.6"
+		"@number-flow/svelte": "^0.3.7"
 	}
 }
