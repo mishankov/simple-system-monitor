@@ -1,3 +1,4 @@
 build/
 coverage.out
 user-assets/
+.aider*
