@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
 	"github.com/mishankov/logman/loggers"
 
 	"github.com/mishankov/simple-system-monitor/internal/handler/websocket"
@@ -15,34 +14,34 @@ import (
 var logger = loggers.NewDefaultLogger()
 
 type Server struct {
-	router chi.Router
-	port   string
+	mux  *http.ServeMux
+	port string
 }
 
 func NewServer(memInfoHandler *websocket.MemInfoHandler, cpuInfoHandler *websocket.CPUInfoHandler, uptimeHandler *websocket.UptimeHandler, combinedHandler *websocket.CombinedHandler, assets embed.FS, userAssetsPath string, port string) *Server {
-	r := chi.NewRouter()
+	mux := http.NewServeMux()
 
-	r.Get("/meminfo", memInfoHandler.GetJSONWS)
-	r.Get("/cpuinfo", cpuInfoHandler.GetJSONWS)
-	r.Get("/uptime", uptimeHandler.GetJSONWS)
-	r.Get("/combined", combinedHandler.GetJSONWS)
+	mux.HandleFunc("/meminfo", memInfoHandler.GetJSONWS)
+	mux.HandleFunc("/cpuinfo", cpuInfoHandler.GetJSONWS)
+	mux.HandleFunc("/uptime", uptimeHandler.GetJSONWS)
+	mux.HandleFunc("/combined", combinedHandler.GetJSONWS)
 
-	r.Handle("/user-assets/*", http.StripPrefix("/user-assets/", http.FileServer(http.Dir(userAssetsPath))))
+	mux.Handle("/user-assets/", http.StripPrefix("/user-assets/", http.FileServer(http.Dir(userAssetsPath))))
 
 	serverRoot, err := fs.Sub(assets, "build")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	r.Handle("/*", http.FileServer(http.FS(serverRoot)))
+	mux.Handle("/", http.FileServer(http.FS(serverRoot)))
 
-	return &Server{router: r, port: port}
+	return &Server{mux: mux, port: port}
 }
 
 func (s *Server) Serve() error {
 	logger.Info("Staring server at", "http://localhost:"+s.port)
 
-	if err := http.ListenAndServe(":"+s.port, s.router); err != nil {
+	if err := http.ListenAndServe(":"+s.port, s.mux); err != nil {
 		return err
 	}
 
