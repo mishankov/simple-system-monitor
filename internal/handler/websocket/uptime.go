@@ -16,7 +16,7 @@ func NewUptimeHandler(svc uptime.Service) *UptimeHandler {
 	return &UptimeHandler{svc: svc}
 }
 
-func (uh *UptimeHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) {
+func (uh *UptimeHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	logger.Infof("%v requests uptime info", req.RemoteAddr)
 	defer logger.Info("Stop sending uptime to", req.RemoteAddr)
 
