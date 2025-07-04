@@ -21,10 +21,10 @@ type Server struct {
 func NewServer(memInfoHandler *websocket.MemInfoHandler, cpuInfoHandler *websocket.CPUInfoHandler, uptimeHandler *websocket.UptimeHandler, combinedHandler *websocket.CombinedHandler, assets embed.FS, userAssetsPath string, port string) *Server {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/meminfo", memInfoHandler.GetJSONWS)
-	mux.HandleFunc("/cpuinfo", cpuInfoHandler.GetJSONWS)
-	mux.HandleFunc("/uptime", uptimeHandler.GetJSONWS)
-	mux.HandleFunc("/combined", combinedHandler.GetJSONWS)
+	mux.Handle("/meminfo", memInfoHandler)
+	mux.Handle("/cpuinfo", cpuInfoHandler)
+	mux.Handle("/uptime", uptimeHandler)
+	mux.Handle("/combined", combinedHandler)
 
 	mux.Handle("/user-assets/", http.StripPrefix("/user-assets/", http.FileServer(http.Dir(userAssetsPath))))
 

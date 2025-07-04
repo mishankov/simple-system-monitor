@@ -24,7 +24,7 @@ func NewCombinedHandler(cpuSvc cpuinfo.Service, memSvc meminfo.Service, uptimeSv
 	}
 }
 
-func (coh *CombinedHandler) GetJSONWS(w http.ResponseWriter, req *http.Request) {
+func (coh *CombinedHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	logger.Infof("%v requests combined info", req.RemoteAddr)
 	defer logger.Info("Stop sending combined info to", req.RemoteAddr)
 
