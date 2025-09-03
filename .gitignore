@@ -1,4 +1,5 @@
 build/
 coverage.out
+coverage.txt
 user-assets/
 .aider*
