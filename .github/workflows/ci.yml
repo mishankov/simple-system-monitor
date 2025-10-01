@@ -102,7 +102,7 @@ jobs:
           name: webapp
           path: ./cmd/server/build
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: stable
 
