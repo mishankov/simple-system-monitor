@@ -18,7 +18,7 @@ jobs:
   lint-server:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Create empty webapp dir
         run: |
@@ -33,7 +33,7 @@ jobs:
   test-server:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Create empty webapp dir
         run: |
@@ -56,7 +56,7 @@ jobs:
     needs: [ test-server ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/download-artifact@v6
         with:
@@ -70,7 +70,7 @@ jobs:
   build-webapp:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
@@ -94,7 +94,7 @@ jobs:
     needs: [ build-webapp ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Download built webapp from artifacts 
         uses: actions/download-artifact@v6
@@ -133,7 +133,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
