@@ -58,7 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           name: go-code-coverage
   
@@ -97,7 +97,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Download built webapp from artifacts 
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: webapp
           path: ./cmd/server/build
