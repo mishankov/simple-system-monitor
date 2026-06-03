@@ -1,4 +1,4 @@
-FROM node:25 AS buildjs
+FROM node:26 AS buildjs
 WORKDIR /app
 COPY webapp .
 RUN npm ci
