@@ -1,14 +1,16 @@
-FROM node:26 AS buildjs
+FROM --platform=$BUILDPLATFORM node:26 AS buildjs
 WORKDIR /app
 COPY webapp .
 RUN npm ci
 RUN npm run build
 
-FROM golang:1.26 AS buildgo
+FROM --platform=$BUILDPLATFORM golang:1.26 AS buildgo
 WORKDIR /app
 COPY . .
 COPY --from=buildjs cmd/server/build cmd/server/build
-RUN CGO_ENABLED=0 go build -o ./build/simple-system-monitor ./cmd/server
+ARG TARGETOS
+ARG TARGETARCH
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o ./build/simple-system-monitor ./cmd/server
 
 FROM alpine:3
 WORKDIR /app
