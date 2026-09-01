@@ -4,7 +4,7 @@ COPY webapp .
 RUN npm ci
 RUN npm run build
 
-FROM golang:1.26 AS buildgo
+FROM golang:1.27 AS buildgo
 WORKDIR /app
 COPY . .
 COPY --from=buildjs cmd/server/build cmd/server/build
